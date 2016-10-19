@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler\Exception;
+namespace RcmErrorHandler2\Exception;
 
 /**
  * Class UserErrorException

@@ -23,9 +23,9 @@ interface Config
     public function get($key, $default = null);
 
     /**
-     * getAll
+     * toArray
      *
      * @return array
      */
-    public function getAll();
+    public function toArray();
 }

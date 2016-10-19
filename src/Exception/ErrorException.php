@@ -28,7 +28,7 @@ class ErrorException extends \ErrorException
      * @param \Exception $previous
      * @param array      $context
      */
-    public function __construct($message, $code, $severity, $filename, $lineno, \Exception $previous, $context = [])
+    public function __construct($message, $code, $severity, $filename, $lineno, $previous = null, $context = [])
     {
         $this->context = $context;
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous);

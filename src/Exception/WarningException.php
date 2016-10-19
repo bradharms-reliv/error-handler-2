@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler\Exception;
+namespace RcmErrorHandler2\Exception;
 
 /**
  * Class WarningException
@@ -15,6 +15,6 @@ namespace RcmErrorHandler\Exception;
  * @version   Release: <package_version>
  * @link      https://github.com/reliv
  */
-class WarningException extends \ErrorException
+class WarningException extends ErrorException
 {
 }
