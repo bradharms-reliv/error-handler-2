@@ -2,7 +2,7 @@
 
 namespace RcmErrorHandler2\Handler;
 
-use RcmErrorHandler2\Core\ObserverSubject;
+use RcmErrorHandler2\Exception\ErrorException;
 
 /**
  * Interface Throwable
@@ -12,14 +12,23 @@ use RcmErrorHandler2\Core\ObserverSubject;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-interface Throwable extends ObserverSubject
+interface Throwable extends Handler
 {
     /**
      * handle
      *
-     * @param \Throwable $exception
+     * @param \Exception|\Throwable $exception
      *
-     * @return mixed
+     * @return void
      */
-    public function handle(\Throwable $exception);
+    public function handle($exception);
+
+    /**
+     * getErrorException
+     *
+     * @param \Exception|\Throwable $exception
+     *
+     * @return ErrorException
+     */
+    public function getErrorException($exception);
 }

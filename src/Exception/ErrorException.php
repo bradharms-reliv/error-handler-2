@@ -60,6 +60,20 @@ class ErrorException extends \ErrorException
     }
 
     /**
+     * getActualExceptionClass
+     *
+     * @return string
+     */
+    public function getActualExceptionClass()
+    {
+        if ($this->actualError instanceof \stdClass) {
+            return get_class($this->actualError);
+        }
+
+        return get_class($this);
+    }
+
+    /**
      * throwActual
      *
      * @return void

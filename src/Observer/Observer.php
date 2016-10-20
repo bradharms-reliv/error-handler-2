@@ -1,34 +1,32 @@
 <?php
 
-namespace RcmErrorHandler2\Core;
+namespace RcmErrorHandler2\Observer;
 
 use RcmErrorHandler2\Exception\ErrorException;
 
 /**
- * Interface ObserverSubject
+ * Interface Observer
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-interface ObserverSubject
+interface Observer
 {
     /**
-     * registerObserver
+     * getName
      *
-     * @param Observer $observer
-     *
-     * @return void
+     * @return string
      */
-    public function registerObserver($observer);
+    public function getName();
 
     /**
-     * notifyObservers
+     * notify
      *
      * @param ErrorException $error
      *
      * @return void
      */
-    public function notifyObservers(ErrorException $error);
+    public function notify(ErrorException $error);
 }

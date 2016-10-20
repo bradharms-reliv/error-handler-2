@@ -1,0 +1,36 @@
+{
+  "name": "rcm/error-handler-2",
+  "description": "Error and Exception override and observers.",
+  "type": "library",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "reliv",
+    "error",
+    "exception",
+    "module",
+    "zf2"
+  ],
+  "homepage": "https://github.com/reliv/RcmErrorHandler2",
+  "authors": [
+    {
+      "name": "James Jervis",
+      "email": "jjervis@relivinc.com",
+      "homepage": "https://github.com/reliv"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "psr/http-message": "~1.0",
+    "psr/log": "~1.0",
+    "zendframework/zend-diactoros": "^1.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0",
+    "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "RcmErrorHandler2\\": "src/"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 namespace RcmErrorHandler2\Handler;
 
-use RcmErrorHandler2\Core\ObserverSubject;
+use RcmErrorHandler2\Exception\ErrorException;
 
 /**
  * Interface Error
@@ -12,7 +12,7 @@ use RcmErrorHandler2\Core\ObserverSubject;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-interface Error extends ObserverSubject
+interface Error extends Handler
 {
     /**
      * handle
@@ -28,6 +28,25 @@ interface Error extends ObserverSubject
      * @return bool
      */
     public function handle(
+        $errno = 0,
+        $errstr = 1,
+        $errfile = __FILE__,
+        $errline = __LINE__,
+        $errcontext = []
+    );
+
+    /**
+     * getErrorException
+     *
+     * @param int    $errno severity
+     * @param int    $errstr message
+     * @param string $errfile file
+     * @param int    $errline line
+     * @param array  $errcontext
+     *
+     * @return ErrorException
+     */
+    public function getErrorException(
         $errno = 0,
         $errstr = 1,
         $errfile = __FILE__,

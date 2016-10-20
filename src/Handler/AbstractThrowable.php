@@ -2,8 +2,11 @@
 
 namespace RcmErrorHandler2\Handler;
 
-use RcmErrorHandler2\Core\AbstractObserverSubject;
 use RcmErrorHandler2\Exception\ErrorException;
+use RcmErrorHandler2\Http\BasicErrorRequest;
+use RcmErrorHandler2\Http\BasicErrorResponse;
+use RcmErrorHandler2\Service\ErrorExceptionBuilder;
+use RcmErrorHandler2\Service\PhpServer;
 
 /**
  * Abstract Class AbstractThrowable
@@ -13,27 +16,47 @@ use RcmErrorHandler2\Exception\ErrorException;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-abstract class AbstractThrowable extends AbstractObserverSubject implements Throwable
+abstract class AbstractThrowable extends AbstractHandler implements Throwable
 {
     /**
      * handle
      *
-     * @param \Throwable $exception
+     * @param \Exception|\Throwable $exception
      *
-     * @return mixed
+     * @return void
      */
-    public function handle(\Throwable $exception)
+    public function handle($exception)
     {
-        $errorException = new ErrorException(
-            $exception->getMessage(),
-            $exception->getCode(),
-            E_USER_ERROR,
-            $exception->getFile(),
-            $exception->getLine(),
-            $exception,
+        $errorException = $this->getErrorException($exception);
+
+        $request = new BasicErrorRequest(
+            '/',
+            PhpServer::getRequestMethod(),
+            PhpServer::getRequestBody(),
+            PhpServer::getRequestHeaders(),
+            $errorException
+        );
+
+        $response = new BasicErrorResponse(
+            'php://memory',
+            500,
             []
         );
 
-        return $this->notifyObservers($errorException);
+        $errorResponse = $this->notify($request, $response);
+
+        $this->display($errorResponse);
+    }
+
+    /**
+     * getErrorException
+     *
+     * @param \Exception|\Throwable $exception
+     *
+     * @return ErrorException
+     */
+    public function getErrorException($exception)
+    {
+        return ErrorExceptionBuilder::buildFromThrowable($exception);
     }
 }
