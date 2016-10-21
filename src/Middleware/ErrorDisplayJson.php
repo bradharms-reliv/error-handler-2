@@ -14,7 +14,7 @@ use RcmErrorHandler2\Service\ErrorExceptionExtractor;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayJson
+class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
 {
     /**
      * __invoke
@@ -39,6 +39,8 @@ class ErrorDisplayJson
         $result['message'] = $localMessage . $result['message'];
         $content = json_encode($result, JSON_PRETTY_PRINT, 3);
 
+        // only our error please
+        $response = $response->withNormalErrorHandling(false);
         $response = $response->withHeader('status', '500');
         $response = $response->withHeader('content-type', 'application/json');
 

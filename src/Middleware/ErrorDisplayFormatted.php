@@ -2,19 +2,20 @@
 
 namespace RcmErrorHandler2\Middleware;
 
+use RcmErrorHandler2\Core\Config;
 use RcmErrorHandler2\Formatter\Formatter;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 
 /**
- * Class ErrorDisplaySimple
+ * Class ErrorDisplayFormatted
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplaySimple
+class ErrorDisplayFormatted extends ErrorDisplayAbstract implements ErrorDisplay
 {
     /**
      * @var Formatter
@@ -22,14 +23,21 @@ class ErrorDisplaySimple
     protected $formatter;
 
     /**
+     * @var Config
+     */
+    protected $formatterConfig;
+
+    /**
      * ErrorDisplayBasic constructor.
      *
      * @param Formatter $formatter
      */
     public function __construct(
-        Formatter $formatter
+        Formatter $formatter,
+        Config $formatterConfig
     ) {
         $this->formatter = $formatter;
+        $this->formatterConfig = $formatterConfig;
     }
 
     /**
@@ -45,7 +53,7 @@ class ErrorDisplaySimple
     {
         $body = $response->getBody();
 
-        $errorString = $this->formatter->format($request->getError());
+        $errorString = $this->formatter->format($request->getError(), $this->formatterConfig);
 
         $body->write($errorString);
 

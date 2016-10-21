@@ -4,17 +4,30 @@
  */
 return [
     /**
+     * enable Error overrides (false = off)
+     */
+    'overrideErrors' => false,
+
+    /**
      * enable Exception overrides (false = off)
      */
     'overrideExceptions' => false,
 
     /**
-     * enable Error overrides (false = off)
+     * Options for the default formatter
      */
-    'overrideErrors' => false,
+    'defaultFormatter' => [
 
-    'formatters' => [
+    ],
 
+    /**
+     * errorDisplayMiddleware This middleware is for displaying errors ONLY
+     * - Each middleware can check if it wants to display the error and return a response
+     * - Or call next if it does not display the error
+     *
+     */
+    'errorDisplayMiddleware' => [
+        \RcmErrorHandler2\Middleware\ErrorDisplayJson::class
     ],
 
     /**
@@ -28,114 +41,21 @@ return [
         \RcmErrorHandler2\Log\LoggerObserver::class => [
             // Logger Services to use
             'loggers' => [
-                'RcmErrorHandler\Log\FileErrorLogger',
-                //'RcmErrorHandler\Log\PhpErrorLogger',
-                //'RcmErrorHandler\Log\VarDumpErrorLogger',
-                //'Reliv\RcmJira\Log\JiraLogger',
-                //'Reliv\RcmAxosoft\Log\AxosoftLogger',
+                RcmErrorHandler2\Log\FileErrorLogger::class,
+                //RcmErrorHandler2\Log\PhpErrorLogger::class,
+                //RcmErrorHandler\Log\VarDumpErrorLogger::class,
+                //Reliv\RcmJira\Log\JiraLoggerPsr::class,
+                //Reliv\RcmAxosoft\Log\AxosoftLoggerPsr::class',
             ],
             // Include Stacktrace - true to include stacktrace for loggers
             'includeStacktrace' => true,
-        ],
-        /* */
-    ],
-];
+            'summaryFormatter' => [
 
-[
-    /**
-     * enable Exception overrides (false = off)
-     */
-    'overrideExceptions' => false,
-
-    /**
-     * enable Error overrides (false = off)
-     */
-    'overrideErrors' => false,
-
-    /**
-     * Error formatters,
-     *
-     * 'request/contentheader' => [
-     *   'class' => '\Some\Formater\Class',
-     *   'options' => ['formatter' => 'options'];
-     * ]
-     */
-    'format' => [
-        /**
-         * Will over-ride system default if used
-         */
-        /* *
-        '_default' => array(
-            'class' => '\RcmErrorHandler\Format\FormatDefault',
-            'options' => array(),
-        ),
-        /* */
-
-        /**
-         * Used for JSON formatting of errors if request is application/json
-         *
-         */
-        'application/json' => [
-            'class' => '\RcmErrorHandler\Format\FormatJson',
-            'options' => [],
-        ]
-    ],
-
-    /**
-     * @deprecated Use Observers
-     * Listeners can be injected to listen for errors
-     */
-    'listener' => [
-        /**
-         * Standard listener for logging errors using loggers
-         */
-        /* *
-        '\RcmErrorHandler\Log\LoggerErrorListener' => [
-            // Required event
-            'event' => 'RcmErrorHandler::All',
-            // Options
-            'options' => [
-                // Logger Services to use
-                'loggers' => [
-                    'RcmErrorHandler\Log\FileErrorLogger',
-                    //'RcmErrorHandler\Log\PhpErrorLogger',
-                    //'RcmErrorHandler\Log\VarDumpErrorLogger',
-                    //'Reliv\RcmJira\Log\JiraLogger',
-                    //'Reliv\RcmAxosoft\Log\AxosoftLogger',
-                ],
-                // Include Stacktrace - true to include stacktrace for loggers
-                'includeStacktrace' => true,
             ],
         ],
         /* */
     ],
-    /**
-     * Observers can be injected to listen for errors
-     */
-    'observers' => [
-        /**
-         * Standard Observers for logging errors using loggers
-         */
-        /* *
-        '\RcmErrorHandler\Log\LoggerErrorObserver' => [
-            // Required event
-            'event' => 'RcmErrorHandler::All',
-            // Options
-            'options' => [
-                // Logger Services to use
-                'loggers' => [
-                    'RcmErrorHandler\Log\FileErrorLogger',
-                    //'RcmErrorHandler\Log\PhpErrorLogger',
-                    //'RcmErrorHandler\Log\VarDumpErrorLogger',
-                    //'Reliv\RcmJira\Log\JiraLogger',
-                    //'Reliv\RcmAxosoft\Log\AxosoftLogger',
-                ],
-                // Include Stacktrace - true to include stacktrace for loggers
-                'includeStacktrace' => true,
-            ],
-        ],
-        /* */
-    ],
+
     /**
      * Define if logging is turned on.
      * Define the allowed routes to be logged

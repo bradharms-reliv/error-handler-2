@@ -13,6 +13,17 @@ namespace RcmErrorHandler2\Service;
 class PhpServer
 {
     /**
+     * getRequestHttpHost
+     *
+     * @return string
+     */
+    public static function getRequestHttpHost()
+    {
+        // @todo filter_input( INPUT_SERVER, 'REQUEST_URI' )
+        return $_SERVER['HTTP_HOST'];
+    }
+
+    /**
      * getRequestUri
      *
      * @return string

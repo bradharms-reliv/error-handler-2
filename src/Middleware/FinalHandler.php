@@ -72,6 +72,7 @@ class FinalHandler
             return $response;
         }
 
+        // @todo Could handle the case better
         $content = json_encode($err, JSON_PRETTY_PRINT, 3);
         $body = $response->getBody();
         $body->write("FinalError: \n" . $content);

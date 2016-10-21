@@ -2,6 +2,7 @@
 
 namespace RcmErrorHandler2\Formatter;
 
+use RcmErrorHandler2\Core\Config;
 use RcmErrorHandler2\Exception\ErrorException;
 
 /**
@@ -18,8 +19,9 @@ interface Formatter
      * format
      *
      * @param ErrorException $errorException
+     * @param Config         $options
      *
      * @return string
      */
-    public function format(ErrorException $errorException);
+    public function format(ErrorException $errorException, Config $options);
 }

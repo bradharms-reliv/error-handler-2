@@ -2,32 +2,18 @@
 
 namespace RcmErrorHandler2\Formatter;
 
-use RcmErrorHandler2\Exception\ErrorException;
+use RcmErrorHandler2\Core\Config;
 
 /**
- * Class SimpleSummary
+ * Class AbstractSummaryFormatter
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class SimpleSummaryFormatter extends AbstractFormatter implements SummaryFormatter
+abstract class AbstractSummaryFormatter extends AbstractFormatter implements SummaryFormatter
 {
-    /**
-     * format
-     *
-     * @param ErrorException $errorException
-     *
-     * @return string
-     */
-    public function format(ErrorException $errorException)
-    {
-        return $errorException->getActualExceptionClass() . ' - ' .
-        $errorException->getMessage() . ' - ' .
-        $this->buildRelativePath($errorException->getFile());
-    }
-
     /**
      * buildRelativePath
      *

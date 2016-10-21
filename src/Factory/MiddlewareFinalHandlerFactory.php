@@ -3,32 +3,33 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Formatter\SimpleFormatter;
+use RcmErrorHandler2\Handler\Throwable;
+use RcmErrorHandler2\Middleware\FinalHandler;
 
 /**
- * Class SimpleFormatterFactory
+ * Class MiddlewareFinalHandlerFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class SimpleFormatterFactory
+class MiddlewareFinalHandlerFactory
 {
     /**
      * __invoke
      *
      * @param ContainerInterface $container
      *
-     * @return SimpleFormatter
+     * @return FinalHandler
      */
     public function __invoke($container)
     {
-        $configObject = new BasicConfig($loggerObserverConfig);
+        /** @var Throwable $throwableHandler */
+        $throwableHandler = $container->get(Throwable::class);
 
-        new SimpleFormatter(
-            $options,
-
+        return new FinalHandler(
+            $throwableHandler
         );
     }
 }

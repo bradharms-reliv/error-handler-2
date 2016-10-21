@@ -6,14 +6,14 @@ use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 
 /**
- * Class ErrorDisplayBasic
+ * Class ErrorDisplayFinalBasic
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
+class ErrorDisplayFinalBasic extends ErrorDisplayAbstract implements ErrorDisplayFinal
 {
     /**
      * __invoke
@@ -26,6 +26,7 @@ class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
      */
     public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null)
     {
+        $response = $response->withNormalErrorHandling(true);
         $body = $response->getBody();
         $body->write('An unhandled error occurred');
 

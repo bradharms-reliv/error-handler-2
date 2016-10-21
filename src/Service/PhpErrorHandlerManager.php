@@ -42,21 +42,16 @@ class PhpErrorHandlerManager
     /**
      * setErrorHandler
      *
-     * @param Config  $config
      * @param Handler $handler
      *
      * @return void
      */
-    public static function setErrorHandler(Config $config, Handler $handler)
+    public static function setErrorHandler(Handler $handler)
     {
-        if (!$config->get('overrideErrors')) {
-            return;
-        }
-
         $originalHandler = set_error_handler(
             [
                 $handler,
-                'handleError'
+                'handle'
             ]
         );
 
@@ -83,6 +78,18 @@ class PhpErrorHandlerManager
     }
 
     /**
+     * throwWithOriginalErrorHandler
+     *
+     * @param \Throwable $exception
+     *
+     * @return bool
+     */
+    public static function throwWithOriginalErrorHandler() {
+        restore_error_handler();
+        return false;
+    }
+
+    /**
      * getCurrentErrorHandler
      *
      * @return mixed
@@ -98,25 +105,34 @@ class PhpErrorHandlerManager
     /**
      * setExceptionHandler
      *
-     * @param Config  $config
      * @param Handler $handler
      *
      * @return void
      */
-    public static function setExceptionHandler(Config $config, Handler $handler)
+    public static function setExceptionHandler(Handler $handler)
     {
-        if (!$config->get('overrideExceptions')) {
-            return;
-        }
-
         $originalHandler = set_exception_handler(
             [
                 $handler,
-                'handleException'
+                'handle'
             ]
         );
 
         self::$lastExceptionHandler = $originalHandler;
+    }
+
+    /**
+     * throwWithOriginalExceptionHandler
+     *
+     * @param \Throwable $exception
+     *
+     * @return void
+     * @throws \Throwable
+     */
+    public static function throwWithOriginalExceptionHandler(\Throwable $exception)
+    {
+        restore_error_handler();
+        throw $exception;
     }
 
     /**

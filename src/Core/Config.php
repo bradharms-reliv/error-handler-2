@@ -23,6 +23,15 @@ interface Config
     public function get($key, $default = null);
 
     /**
+     * getConfig
+     *
+     * @param string $key
+     *
+     * @return Config
+     */
+    public function getConfig($key);
+
+    /**
      * toArray
      *
      * @return array

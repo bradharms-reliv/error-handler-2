@@ -6,6 +6,7 @@ use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\BasicErrorRequest;
 use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
+use RcmErrorHandler2\Service\PhpErrorHandlerManager;
 use RcmErrorHandler2\Service\PhpErrorSettings;
 use RcmErrorHandler2\Service\PhpServer;
 
@@ -68,9 +69,14 @@ class AbstractError extends AbstractHandler implements Error
         $errorResponse = $this->notify($request, $response);
 
         $this->display($errorResponse);
+        // @todo This logic might not be what we want
+        if ($errorResponse->stopNormalErrorHandling()) {
+            exit(1);
+        }
 
         // Return false: PHP: If the function returns FALSE then the normal error handler continues.
-        return $errorResponse->stopNormalErrorHandling();
+        // return PhpErrorHandlerManager::throwWithOriginalErrorHandler();
+        return false;
     }
 
     /**

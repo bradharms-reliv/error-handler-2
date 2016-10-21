@@ -2,17 +2,18 @@
 
 namespace RcmErrorHandler2\Formatter;
 
+use RcmErrorHandler2\Core\Config;
 use RcmErrorHandler2\Exception\ErrorException;
 
 /**
- * Class SimpleTraceFormatter
+ * Class HtmlTraceFormatter
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class SimpleTraceFormatter extends AbstractFormatter implements TraceFormatter
+class HtmlTraceFormatter extends AbstractFormatter implements TraceFormatter
 {
     /**
      * format
@@ -21,9 +22,9 @@ class SimpleTraceFormatter extends AbstractFormatter implements TraceFormatter
      *
      * @return string
      */
-    public function format(ErrorException $errorException)
+    public function format(ErrorException $errorException, Config $options)
     {
-        $limit = $this->getOption('traceLimit', 0);
+        $limit = $options->get('traceLimit', 0);
 
         $actualException = $errorException->getActualException();
 
@@ -87,7 +88,7 @@ class SimpleTraceFormatter extends AbstractFormatter implements TraceFormatter
                         <td bgcolor="#eeeeec">' .
                 $object . $function . '(' . $argStr . ')' . '
                         </td>
-                        <td title="' . $file . '"bgcolor="#eeeeec">' .
+                        <td title="' . $file . '" bgcolor="#eeeeec">' .
                 $file . '<b>:</b>' . $line . '
                         </td>
                     </tr>

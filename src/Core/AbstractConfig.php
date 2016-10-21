@@ -53,6 +53,29 @@ abstract class AbstractConfig implements Config
     }
 
     /**
+     * getConfig
+     *
+     * @param string $key
+     *
+     * @return Config
+     */
+    public function getConfig($key)
+    {
+        $value = [];
+
+        if (array_key_exists($key, $this->configArray)) {
+
+            $value = $this->configArray[$key];
+        }
+
+        if (is_array($value)) {
+            return new BasicConfig($value);
+        }
+
+        return new BasicConfig([]);
+    }
+
+    /**
      * toArray
      *
      * @return array

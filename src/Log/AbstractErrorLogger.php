@@ -4,7 +4,7 @@ namespace RcmErrorHandler2\Log;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
+use RcmErrorHandler2\Service\PhpSession;
 
 /**
  * Class AbstractErrorLogger
@@ -24,21 +24,6 @@ use Psr\Log\LogLevel;
 abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInterface
 {
     /**
-     * @var array $priorities
-     */
-    protected $priorities
-        = [
-            LogLevel::EMERGENCY => 'EMERG',
-            LogLevel::ALERT => 'ALERT',
-            LogLevel::CRITICAL => 'CRIT',
-            LogLevel::ERROR => 'ERR',
-            LogLevel::WARNING => 'WARN',
-            LogLevel::NOTICE => 'NOTICE',
-            LogLevel::INFO => 'INFO',
-            LogLevel::DEBUG => 'DEBUG',
-        ];
-
-    /**
      * @var array
      */
     protected $exceptionMethodsBlacklist
@@ -53,6 +38,15 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
      */
     protected $options = [];
 
+    /**
+     * AbstractErrorLogger constructor.
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = [])
+    {
+        $this->options = $options;
+    }
 
     /**
      * log
@@ -83,42 +77,6 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
         }
 
         return $default;
-    }
-
-    /**
-     * getPriorityString
-     *
-     * @param $priority
-     *
-     * @return string
-     */
-    public function getPriorityString($priority)
-    {
-        if (isset($this->priorities[$priority])) {
-            $priorityString = $this->priorities[$priority];
-        } else {
-            $priorityString = $this->priorities[self::INFO];
-        }
-
-        return $priorityString;
-    }
-
-    /**
-     * getPriorityFromErrorNumber
-     *
-     * @param $errno
-     *
-     * @return int
-     */
-    public function getPriorityFromErrorNumber($errno)
-    {
-        if (isset(self::$errorPriorityMap[$errno])) {
-            $priority = self::$errorPriorityMap[$errno];
-        } else {
-            $priority = self::INFO;
-        }
-
-        return $priority;
     }
 
     /**
@@ -207,7 +165,7 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
             $message = preg_replace($pattern, $replacement, $message);
         }
 
-        $summary = $this->getPriorityString($priority) . ': ' . $message;
+        $summary = $priority . ': ' . $message;
 
         $summary = substr($summary, 0, 255);
 
@@ -235,17 +193,19 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
     {
         $sessionVars = [];
 
+        $session = PhpSession::getSessionVars();
+
         if (is_array($includeSessionVars)) {
             $sessionVarKeys = $includeSessionVars;
             foreach ($sessionVarKeys as $key) {
-                if (isset($_SESSION[$key])) {
-                    $sessionVars[$key] = $_SESSION[$key];
+                if (isset($session[$key])) {
+                    $sessionVars[$key] = $session[$key];
                 }
             }
         }
 
         if ($includeSessionVars == 'ALL') {
-            $sessionVars = $_SESSION;
+            $sessionVars = $session;
         }
 
         return $this->prepareArray('Session', $sessionVars, $lineBreak);

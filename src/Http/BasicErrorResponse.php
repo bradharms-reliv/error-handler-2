@@ -34,4 +34,18 @@ class BasicErrorResponse extends Response implements ErrorResponse
     {
         return !$this->normalErrorHandlerContinues;
     }
+
+    /**
+     * withNormalErrorHandling
+     *
+     * @param $normalErrorHandlerContinues
+     *
+     * @return ErrorResponse
+     */
+    public function withNormalErrorHandling($normalErrorHandlerContinues)
+    {
+        $new = clone $this;
+        $new->normalErrorHandlerContinues = $normalErrorHandlerContinues;
+        return $new;
+    }
 }

@@ -2,47 +2,49 @@
 
 namespace RcmErrorHandler2\Formatter;
 
+use RcmErrorHandler2\Core\Config;
 use RcmErrorHandler2\Exception\ErrorException;
 
 /**
- * Class SimpleFormatter
+ * Class HtmlFormatter
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class SimpleFormatter extends AbstractFormatter implements Formatter
+class HtmlFormatter extends AbstractFormatter implements Formatter
 {
     /**
      * @var TraceFormatter
      */
-    protected $traceFormatter;
+    protected $defaultTraceFormatter;
 
     /**
      * SimpleFormatter constructor.
      *
-     * @param array          $options
-     * @param TraceFormatter $traceFormatter
+     * @param TraceFormatter $defaultTraceFormatter
      */
     public function __construct(
-        array $options,
-        TraceFormatter $traceFormatter
+        TraceFormatter $defaultTraceFormatter
     ) {
-        $this->traceFormatter = $traceFormatter;
-        parent::__construct($options);
+        $this->defaultTraceFormatter = $defaultTraceFormatter;
     }
 
     /**
      * format
      *
      * @param ErrorException $errorException
+     * @param Config         $options
      *
      * @return string
      */
-    public function format(ErrorException $errorException)
+    public function format(ErrorException $errorException, Config $options)
     {
         $actualExceptionClass = $errorException->getActualExceptionClass();
+
+        /** @var TraceFormatter $traceFormatter */
+        $traceFormatter = $options->get('traceFormatter', $this->defaultTraceFormatter);
 
         $output
             = '
@@ -68,7 +70,7 @@ class SimpleFormatter extends AbstractFormatter implements Formatter
                 </tr>
                 <tr>
                     <td>
-                        ' . $this->traceFormatter->format($errorException) . '
+                        ' . $traceFormatter->format($errorException, $options) . '
                     </td>
                 </tr>
                 </tbody>

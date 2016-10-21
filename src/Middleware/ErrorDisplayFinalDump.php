@@ -14,7 +14,7 @@ use RcmErrorHandler2\Service\ErrorExceptionExtractor;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayFinalDump
+class ErrorDisplayFinalDump extends ErrorDisplayAbstract implements ErrorDisplayFinal
 {
     /**
      * __invoke
@@ -27,6 +27,7 @@ class ErrorDisplayFinalDump
      */
     public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null)
     {
+        $response = $response->withNormalErrorHandling(true);
         $body = $response->getBody();
 
         $errorException = $request->getError();

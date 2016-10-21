@@ -2,6 +2,7 @@
 
 namespace RcmErrorHandler2\Handler;
 
+use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 use RcmErrorHandler2\Observer\Observer;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\ErrorRequest;
@@ -33,14 +34,21 @@ abstract class AbstractHandler implements Handler
     protected $errorDisplays = [];
 
     /**
+     * @var ErrorDisplayFinal
+     */
+    protected $errorDisplayFinal;
+
+    /**
      * AbstractHandler constructor.
      *
      * @param array $observers     [{Observer}]
      * @param array $errorDisplays [{ErrorDisplay}]
+     * @param ErrorDisplayFinal $errorDisplayFinal
      */
     public function __construct(
         array $observers,
-        array $errorDisplays
+        array $errorDisplays,
+        ErrorDisplayFinal $errorDisplayFinal
     ) {
         foreach ($observers as $observer) {
             $this->registerObserver($observer);
@@ -49,6 +57,8 @@ abstract class AbstractHandler implements Handler
         foreach ($errorDisplays as $errorDisplay) {
             $this->registerErrorDisplay($errorDisplay);
         }
+
+        $this->errorDisplayFinal = $errorDisplayFinal;
     }
 
     /**
@@ -130,13 +140,7 @@ abstract class AbstractHandler implements Handler
         // We set the initial status to a default
         $response = $response->withHeader('status', '500');
 
-        // @todo Might inject this
-        $final = function (ErrorRequest $request, ErrorResponse $response, callable $next = null) {
-            $body = $response->getBody();
-            $body->write('An unhandled error occurred');
-
-            return $response->withBody($body);
-        };
+        $final = $this->errorDisplayFinal;
 
         if (!PhpErrorSettings::canDisplayErrors()) {
             // In this case, nothing special will be displayed

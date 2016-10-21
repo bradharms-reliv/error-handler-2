@@ -19,23 +19,31 @@ class ErrorNumberLogLevelMap
      *
      * @var array
      */
-    public static $map = [
-        E_NOTICE            => LogLevel::NOTICE,
-        E_USER_NOTICE       => LogLevel::NOTICE,
-        E_WARNING           => LogLevel::WARNING,
-        E_CORE_WARNING      => LogLevel::WARNING,
-        E_USER_WARNING      => LogLevel::WARNING,
-        E_ERROR             => LogLevel::ERROR,
-        E_USER_ERROR        => LogLevel::ERROR,
-        E_CORE_ERROR        => LogLevel::ERROR,
-        E_RECOVERABLE_ERROR => LogLevel::ERROR,
-        E_PARSE             => LogLevel::ERROR,
-        E_COMPILE_ERROR     => LogLevel::ERROR,
-        E_COMPILE_WARNING   => LogLevel::ERROR,
-        E_STRICT            => LogLevel::DEBUG,
-        E_DEPRECATED        => LogLevel::DEBUG,
-        E_USER_DEPRECATED   => LogLevel::DEBUG,
-    ];
+    protected static $map
+        = [
+            E_NOTICE => LogLevel::NOTICE,
+            E_USER_NOTICE => LogLevel::NOTICE,
+            E_WARNING => LogLevel::WARNING,
+            E_CORE_WARNING => LogLevel::WARNING,
+            E_USER_WARNING => LogLevel::WARNING,
+            E_ERROR => LogLevel::ERROR,
+            E_USER_ERROR => LogLevel::ERROR,
+            E_CORE_ERROR => LogLevel::ERROR,
+            E_RECOVERABLE_ERROR => LogLevel::ERROR,
+            E_PARSE => LogLevel::ERROR,
+            E_COMPILE_ERROR => LogLevel::ERROR,
+            E_COMPILE_WARNING => LogLevel::ERROR,
+            E_STRICT => LogLevel::DEBUG,
+            E_DEPRECATED => LogLevel::DEBUG,
+            E_USER_DEPRECATED => LogLevel::DEBUG,
+        ];
+
+    /**
+     * Cache of flipped array
+     *
+     * @var array
+     */
+    protected static $mapFlip = null;
 
     /**
      * getPriority
@@ -47,11 +55,33 @@ class ErrorNumberLogLevelMap
     public static function getLogLevel($errno)
     {
         if (isset(self::$map[$errno])) {
-            $priority = self::$map[$errno];
+            $logLevel = self::$map[$errno];
         } else {
-            $priority = LogLevel::INFO;
+            $logLevel = LogLevel::INFO;
         }
 
-        return $priority;
+        return $logLevel;
+    }
+
+    /**
+     * getErrorNo
+     *
+     * @param string $logLevel
+     *
+     * @return int
+     */
+    public static function getErrorNo($logLevel)
+    {
+        if (empty(self::$mapFlip)) {
+            self::$mapFlip = array_flip(self::$map);
+        }
+
+        if (isset(self::$mapFlip[$logLevel])) {
+            $errno = self::$mapFlip[$logLevel];
+        } else {
+            $errno = E_USER_ERROR;
+        }
+
+        return $errno;
     }
 }

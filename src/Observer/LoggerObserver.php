@@ -60,9 +60,9 @@ class LoggerObserver implements Observer
         TraceFormatter $traceFormatter,
         $container
     ) {
+        $this->options = $options;
         $this->summaryFormatter = $summaryFormatter;
         $this->traceFormatter = $traceFormatter;
-        $this->options = $options;
         $this->container = $container;
     }
 
@@ -85,15 +85,16 @@ class LoggerObserver implements Observer
      */
     public function notify(ErrorException $errorException)
     {
-        $loggerConfig = $this->options->get('loggers');
+        $loggerConfig = $this->options->get('loggers', []);
+        $summaryFormatterOptions = $this->options->getConfig('summaryFormatter');
+        $traceFormatterOptions = $this->options->getConfig('traceFormatter');
 
         $container = $this->container;
 
-        $extra = $this->getExtras($errorException);
+        $extra = $this->getExtras($errorException, $traceFormatterOptions);
+        $message = $this->summaryFormatter->format($errorException, $summaryFormatterOptions);
 
         $method = ErrorNumberLogLevelMap::getLogLevel($errorException->getSeverity());
-
-        $message = $this->summaryFormatter->format($errorException);
 
         foreach ($loggerConfig as $serviceName) {
             /** @var LoggerInterface $logger */
@@ -106,10 +107,11 @@ class LoggerObserver implements Observer
      * getExtras
      *
      * @param ErrorException $errorException
+     * @param Config         $traceFormatterOptions
      *
      * @return array
      */
-    protected function getExtras(ErrorException $errorException)
+    protected function getExtras(ErrorException $errorException, Config $traceFormatterOptions)
     {
         $extras = [
             'file' => $errorException->getFile(),
@@ -119,7 +121,7 @@ class LoggerObserver implements Observer
         ];
 
         if ($this->options->get('includeStacktrace', false) == true) {
-            $extras['trace'] = $this->traceFormatter->format($errorException);
+            $extras['trace'] = $this->traceFormatter->format($errorException, $traceFormatterOptions);
         }
 
         return $extras;
