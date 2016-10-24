@@ -19,7 +19,7 @@ class BasicZfThrowable extends AbstractThrowable implements ZfThrowable, Handler
      *
      * @param Event $event
      *
-     * @return mixed
+     * @return void
      */
     public function handleEvent(Event $event)
     {
