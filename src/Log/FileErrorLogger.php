@@ -46,11 +46,11 @@ class FileErrorLogger extends AbstractErrorLogger
             $array['exception:'] = $this->prepareException($extra['exception']);
         }
 
-        $contents = json_encode($array, JSON_PRETTY_PRINT, 4);
+        $contents = json_encode($array, 0);
 
         $fileLogPath = $this->getOption(
             'fileLogPath',
-            'data/Logs'
+            '/var/log'
         );
 
         if (!file_exists($fileLogPath)) {

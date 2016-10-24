@@ -12,3 +12,4 @@ Error handling and error handler over-riding with JS error logger
 - Handling errors and exceptions in PHP means displaying errors as needed.
 - Implement Logger Observer
 - Implement Js Logger API
+- JSON log viewer

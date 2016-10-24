@@ -32,7 +32,7 @@ class HandlerThrowableFactory
         /** @var ErrorDisplayMiddlewareConfig $errorDisplayMiddleware */
         $errorDisplayMiddleware = $container->get(ErrorDisplayMiddlewareConfig::class);
         /** @var ErrorDisplayFinal $errorDisplayFinal */
-        $errorDisplayFinal = $container->get(\RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic::class);
+        $errorDisplayFinal = $container->get(\RcmErrorHandler2\Middleware\ErrorDisplayFinal::class);
 
         return new BasicThrowable(
             $container,

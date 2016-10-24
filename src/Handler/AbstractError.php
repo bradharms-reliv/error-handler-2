@@ -63,9 +63,10 @@ class AbstractError extends AbstractHandler implements Error
         $errorResponse = $this->notify($request, $response);
 
         $this->display($errorResponse);
+
         // @todo This logic might not be what we want
         if ($errorResponse->stopNormalErrorHandling()) {
-            exit(1);
+            return true;
         }
 
         // Return false: PHP: If the function returns FALSE then the normal error handler continues.

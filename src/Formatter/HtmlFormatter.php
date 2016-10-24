@@ -66,6 +66,7 @@ class HtmlFormatter extends AbstractFormatter implements Formatter
                         </div>
                         <div>File: ' . $errorException->getFile() . '</div>
                         <div>Line: <i>' . $errorException->getLine() . '</i></div>
+                        <div>Handler: <i>' . $errorException->getHandler() . '</i></div>
                     </th>
                 </tr>
                 <tr>

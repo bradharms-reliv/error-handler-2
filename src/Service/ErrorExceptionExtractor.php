@@ -33,6 +33,8 @@ class ErrorExceptionExtractor
         if ($result['previous'] instanceof \stdClass) {
             $result['previous'] = get_class($result['previous']);
         }
+        $result['actualExceptionClass'] = $errorException->getActualExceptionClass();
+        $result['handler'] = $errorException->getHandler();
 
         return $result;
     }

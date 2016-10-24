@@ -27,7 +27,7 @@ class ErrorDisplayFinalDump extends ErrorDisplayAbstract implements ErrorDisplay
      *
      * @return callable|ErrorResponse
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
         $response = $response->withNormalErrorHandling(true);
         $body = $response->getBody();

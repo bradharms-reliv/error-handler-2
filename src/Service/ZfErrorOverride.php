@@ -5,8 +5,6 @@ namespace RcmErrorHandler2\Service;
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Handler\BasicZfThrowable;
-use RcmErrorHandler2\Handler\Error;
-use RcmErrorHandler2\Handler\Throwable;
 use RcmErrorHandler2\Handler\ZfThrowable;
 use Zend\Mvc\MvcEvent;
 
@@ -42,6 +40,7 @@ class ZfErrorOverride
         RcmErrorHandler2Config $rcmErrorHandler2Config,
         MvcEvent $event
     ) {
+        $this->container = $container;
         $this->rcmErrorHandler2Config = $rcmErrorHandler2Config;
         $this->event = $event;
     }

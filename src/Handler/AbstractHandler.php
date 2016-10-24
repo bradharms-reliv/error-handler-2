@@ -131,6 +131,7 @@ abstract class AbstractHandler implements Handler
         try {
             $this->notifyObservers($errorException);
         } catch (\Exception $e) {
+            // @todo Any error from here will not be properly handled
             // In this case, nothing will be logged
             // Since the error reporter broke, we will sent this error instead
             $localError = ErrorExceptionBuilder::buildFromThrowable($e);
@@ -176,6 +177,7 @@ abstract class AbstractHandler implements Handler
 
             return $finalResponse;
         } catch (\Exception $e) {
+            // @todo Any error from here will not be properly handled
             // In this case, only the final will happen;
             // Since the error reporter broke, we will sent this error instead
             $localError = ErrorExceptionBuilder::buildFromThrowable($e);
@@ -192,7 +194,7 @@ abstract class AbstractHandler implements Handler
      *
      * @param ErrorResponse $response
      *
-     * @return mixed
+     * @return void
      */
     public function display(ErrorResponse $response)
     {

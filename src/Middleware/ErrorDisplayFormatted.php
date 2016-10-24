@@ -2,6 +2,8 @@
 
 namespace RcmErrorHandler2\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Config\Config;
 use RcmErrorHandler2\Formatter\Formatter;
 use RcmErrorHandler2\Http\ErrorRequest;
@@ -49,8 +51,10 @@ class ErrorDisplayFormatted extends ErrorDisplayAbstract implements ErrorDisplay
      *
      * @return callable|ErrorResponse
      */
-    public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
+        $response = $response->withNormalErrorHandling(false);
+
         $body = $response->getBody();
 
         $errorString = $this->formatter->format($request->getError(), $this->formatterConfig);

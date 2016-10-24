@@ -26,10 +26,10 @@ class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
      *
      * @return callable|ErrorResponse
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
         $body = $response->getBody();
-        $body->write('An unhandled error occurred');
+        $body->write('An error occurred');
 
         return $response->withBody($body);
     }

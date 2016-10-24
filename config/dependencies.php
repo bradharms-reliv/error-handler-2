@@ -27,29 +27,47 @@ return [
         => \RcmErrorHandler2\Factory\HandlerErrorFactory::class,
         \RcmErrorHandler2\Handler\Throwable::class
         => \RcmErrorHandler2\Factory\HandlerThrowableFactory::class,
-        \RcmErrorHandler2\Handler\BasicZfThrowable::class
+        \RcmErrorHandler2\Handler\ZfThrowable::class
         => \RcmErrorHandler2\Factory\HandlerZfThrowableFactory::class,
 
         /**
          * Formatter Services
          */
-        // Default
+        // Formatter Default
         \RcmErrorHandler2\Formatter\Formatter::class
         => \RcmErrorHandler2\Factory\HtmlFormatterFactory::class,
-        \RcmErrorHandler2\Formatter\HtmlFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlFormatterFactory::class,
-        // Default
+        // SummaryFormatter Default
         \RcmErrorHandler2\Formatter\SummaryFormatter::class
         => \RcmErrorHandler2\Factory\HtmlSummaryFormatterFactory::class,
-        // Default
+        // TraceFormatter Default
         \RcmErrorHandler2\Formatter\TraceFormatter::class
         => \RcmErrorHandler2\Factory\HtmlTraceFormatterFactory::class,
+
+        // Others
+        \RcmErrorHandler2\Formatter\HtmlFormatter::class
+        => \RcmErrorHandler2\Factory\HtmlFormatterFactory::class,
+        \RcmErrorHandler2\Formatter\HtmlSummaryFormatter::class
+        => \RcmErrorHandler2\Factory\HtmlSummaryFormatterFactory::class,
+        \RcmErrorHandler2\Formatter\HtmlTraceFormatter::class
+        => \RcmErrorHandler2\Factory\HtmlTraceFormatterFactory::class,
+
+        /**
+         * Loggers
+         */
+        \RcmErrorHandler2\Log\FileErrorLogger::class
+        => \RcmErrorHandler2\Factory\LogFileErrorLoggerFactory::class,
 
         /**
          * Observers
          */
         \RcmErrorHandler2\Observer\LoggerObserver::class
         => \RcmErrorHandler2\Factory\LoggerObserverFactory::class,
+
+        /**
+         * Final Display Default
+         */
+        \RcmErrorHandler2\Middleware\ErrorDisplayFinal::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
 
         /**
          * Middleware

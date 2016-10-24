@@ -24,7 +24,7 @@ class VarDumpErrorLogger extends AbstractErrorLogger
      * @param  mixed              $message
      * @param  array|\Traversable $extra
      *
-     * @return Logger
+     * @return void
      */
     public function log($priority, $message, array $extra = [])
     {
@@ -44,7 +44,5 @@ class VarDumpErrorLogger extends AbstractErrorLogger
             var_dump($this->prepareException($extra['exception']));
         }
         echo '</pre>';
-
-        return $this;
     }
 }

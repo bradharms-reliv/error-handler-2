@@ -32,7 +32,7 @@ class PhpErrorLogger extends AbstractErrorLogger
      */
     public function log($priority, $message, array $extra = [])
     {
-        $messageType = $this->getOption('error_log_message_type', null);
+        $messageType = $this->getOption('error_log_message_type', 0);
 
         error_log(
             'PhpErrorLogger: ' . $priority . ': ' . $message,

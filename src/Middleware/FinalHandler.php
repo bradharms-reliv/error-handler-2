@@ -70,7 +70,7 @@ class FinalHandler
         }
 
         // @todo Could handle the case better
-        $content = json_encode($err, JSON_PRETTY_PRINT, 3);
+        $content = json_encode($err, JSON_PRETTY_PRINT);
         $body = $response->getBody();
         $body->write("FinalError: \n" . $content);
 

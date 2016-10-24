@@ -21,13 +21,20 @@ return [
     ],
 
     /**
+     * General Handler Options
+     */
+    \RcmErrorHandler2\Handler\Handler::class => [
+        'serverErrorStatusCode' => 500,
+    ],
+
+    /**
      * errorDisplayMiddleware This middleware is for displaying errors ONLY
      * - Each middleware can check if it wants to display the error and return a response
      * - Or call next if it does not display the error
-     *
      */
     'errorDisplayMiddleware' => [
-        \RcmErrorHandler2\Middleware\ErrorDisplayJson::class
+        \RcmErrorHandler2\Middleware\ErrorDisplayJson::class,
+        \RcmErrorHandler2\Middleware\ErrorDisplayFormatted::class,
     ],
 
     /**
@@ -49,9 +56,10 @@ return [
             ],
             // Include Stacktrace - true to include stacktrace for loggers
             'includeStacktrace' => true,
-            'summaryFormatter' => [
-
-            ],
+            // traceFormatter run-time Options
+            'traceFormatter' => [],
+            // summaryFormatter run-time Options
+            'summaryFormatter' => [],
         ],
         /* */
     ],
@@ -93,5 +101,24 @@ return [
              'RcmErrorHandler\Log\VarDumpErrorLogger'
             /* */
         ],
+    ],
+
+    /**
+     * FileErrorLogger Options
+     */
+    \RcmErrorHandler2\Log\FileErrorLogger::class => [
+        'fileLogPath' => 'data/Logs',
+    ],
+
+    /**
+     * PhpErrorLogger Options
+     */
+    RcmErrorHandler2\Log\PhpErrorLogger::class => [
+        'error_log_message_type' => 0,
+    ],
+    /**
+     * VarDumpErrorLogger Options
+     */
+    RcmErrorHandler\Log\VarDumpErrorLogger::class => [
     ],
 ];

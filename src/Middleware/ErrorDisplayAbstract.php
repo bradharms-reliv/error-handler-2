@@ -19,6 +19,6 @@ abstract class ErrorDisplayAbstract implements ErrorDisplay
      */
     public function getName()
     {
-        return self::class;
+        return static::class;
     }
 }

@@ -44,7 +44,7 @@ abstract class AbstractThrowable extends AbstractHandler implements Throwable
         $this->display($errorResponse);
         // @todo This logic might not be what we want
         if ($errorResponse->stopNormalErrorHandling()) {
-            exit(1);
+            die();
         }
 
         PhpErrorHandlerManager::throwWithOriginalExceptionHandler($errorException->getActualException());
