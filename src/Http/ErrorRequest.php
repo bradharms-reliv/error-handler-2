@@ -2,7 +2,7 @@
 
 namespace RcmErrorHandler2\Http;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use RcmErrorHandler2\Exception\ErrorException;
 
 /**
@@ -13,7 +13,7 @@ use RcmErrorHandler2\Exception\ErrorException;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-interface ErrorRequest extends RequestInterface
+interface ErrorRequest extends ServerRequestInterface
 {
     /**
      * withError

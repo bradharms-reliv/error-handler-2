@@ -5,25 +5,25 @@ namespace RcmErrorHandler2\Factory;
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig;
 use RcmErrorHandler2\Config\ObserverConfig;
-use RcmErrorHandler2\Handler\BasicError;
+use RcmErrorHandler2\Handler\BasicZfThrowable;
 use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 
 /**
- * Class HandlerErrorFactory
+ * Class HandlerZfThrowableFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class HandlerErrorFactory
+class HandlerZfThrowableFactory
 {
     /**
      * __invoke
      *
      * @param ContainerInterface $container
      *
-     * @return BasicError
+     * @return BasicZfThrowable
      */
     public function __invoke($container)
     {
@@ -34,7 +34,7 @@ class HandlerErrorFactory
         /** @var ErrorDisplayFinal $errorDisplayFinal */
         $errorDisplayFinal = $container->get(\RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic::class);
 
-        return new BasicError(
+        return new BasicZfThrowable(
             $container,
             $observerConfig->toArray(),
             $errorDisplayMiddleware->toArray(),

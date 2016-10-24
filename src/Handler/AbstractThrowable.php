@@ -3,11 +3,10 @@
 namespace RcmErrorHandler2\Handler;
 
 use RcmErrorHandler2\Exception\ErrorException;
-use RcmErrorHandler2\Http\BasicErrorRequest;
 use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
+use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorHandlerManager;
-use RcmErrorHandler2\Service\PhpServer;
 
 /**
  * Abstract Class AbstractThrowable
@@ -30,11 +29,7 @@ abstract class AbstractThrowable extends AbstractHandler implements Throwable
     {
         $errorException = $this->getErrorException($exception);
 
-        $request = new BasicErrorRequest(
-            '/',
-            PhpServer::getRequestMethod(),
-            PhpServer::getRequestBody(),
-            PhpServer::getRequestHeaders(),
+        $request = ErrorServerRequestFactory::errorRequestFromGlobals(
             $errorException
         );
 
@@ -64,6 +59,9 @@ abstract class AbstractThrowable extends AbstractHandler implements Throwable
      */
     public function getErrorException($exception)
     {
-        return ErrorExceptionBuilder::buildFromThrowable($exception);
+        return ErrorExceptionBuilder::buildFromThrowable(
+            $exception,
+            static::class
+        );
     }
 }

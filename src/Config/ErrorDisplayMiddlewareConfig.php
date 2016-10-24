@@ -1,16 +1,16 @@
 <?php
 
-namespace RcmErrorHandler2\Core;
+namespace RcmErrorHandler2\Config;
 
 /**
- * Class DefaultFormatterConfig
+ * Class ErrorDisplayMiddlewareConfig
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class DefaultFormatterConfig extends BasicConfig
+class ErrorDisplayMiddlewareConfig extends BasicConfig
 {
 
 }

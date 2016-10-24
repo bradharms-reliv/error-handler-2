@@ -1,15 +1,14 @@
 <?php
 
-namespace RcmErrorHandler2\Log;
+namespace RcmErrorHandler2\Observer;
 
 use Interop\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use RcmErrorHandler\Log\ErrorNumberLogLevelMap;
-use RcmErrorHandler2\Core\Config;
+use RcmErrorHandler2\Log\ErrorNumberLogLevelMap;
+use RcmErrorHandler2\Config\Config;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Formatter\SummaryFormatter;
 use RcmErrorHandler2\Formatter\TraceFormatter;
-use RcmErrorHandler2\Observer\Observer;
 
 /**
  * Class LoggerObserver

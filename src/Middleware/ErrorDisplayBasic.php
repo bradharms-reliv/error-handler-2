@@ -2,6 +2,8 @@
 
 namespace RcmErrorHandler2\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 
@@ -24,7 +26,7 @@ class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
      *
      * @return callable|ErrorResponse
      */
-    public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $body = $response->getBody();
         $body->write('An unhandled error occurred');

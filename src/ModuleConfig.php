@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler;
+namespace RcmErrorHandler2;
 
 /**
  * Class ModuleConfig

@@ -14,6 +14,13 @@ return [
         'allowed_methods' => ['POST'],
     ],
     [
+        'name' => 'test.rcm-error-handler-2-config',
+        'path' => '/test/rcm-error-handler-2-config',
+        'middleware' => \RcmErrorHandler2\Middleware\TestConfigController::class,
+        'options' => [],
+        'allowed_methods' => ['GET'],
+    ],
+    [
         'name' => 'test.rcm-error-handler-2-error',
         'path' => '/test/rcm-error-handler-2-error',
         'middleware' => \RcmErrorHandler2\Middleware\TestErrorController::class,

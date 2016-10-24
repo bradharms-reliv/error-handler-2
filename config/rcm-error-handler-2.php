@@ -38,7 +38,7 @@ return [
          * Standard Observers for logging errors using loggers
          */
         /* */
-        \RcmErrorHandler2\Log\LoggerObserver::class => [
+        \RcmErrorHandler2\Observer\LoggerObserver::class => [
             // Logger Services to use
             'loggers' => [
                 RcmErrorHandler2\Log\FileErrorLogger::class,

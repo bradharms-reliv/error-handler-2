@@ -3,7 +3,7 @@
 namespace RcmErrorHandler2\Service;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\RcmErrorHandler2Config;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Handler\BasicZfThrowable;
 use RcmErrorHandler2\Handler\Error;
 use RcmErrorHandler2\Handler\Throwable;

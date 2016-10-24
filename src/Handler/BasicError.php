@@ -10,7 +10,7 @@ namespace RcmErrorHandler2\Handler;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class BasicError extends AbstractError
+class BasicError extends AbstractError implements Handler
 {
 
 }

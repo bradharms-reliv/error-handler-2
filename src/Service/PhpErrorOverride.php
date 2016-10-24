@@ -3,7 +3,7 @@
 namespace RcmErrorHandler2\Service;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\RcmErrorHandler2Config;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Handler\Error;
 use RcmErrorHandler2\Handler\Throwable;
 
@@ -28,7 +28,7 @@ class PhpErrorOverride
     protected $rcmErrorHandler2Config;
 
     /**
-     * PhpErrorOveride constructor.
+     * PhpErrorOverride constructor.
      *
      * @param ContainerInterface     $container
      * @param RcmErrorHandler2Config $rcmErrorHandler2Config
@@ -37,6 +37,7 @@ class PhpErrorOverride
         $container,
         RcmErrorHandler2Config $rcmErrorHandler2Config
     ) {
+        $this->container = $container;
         $this->rcmErrorHandler2Config = $rcmErrorHandler2Config;
     }
 

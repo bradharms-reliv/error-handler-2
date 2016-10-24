@@ -15,7 +15,7 @@ class ErrorException extends \ErrorException
     /**
      * @var \Throwable|null
      */
-    protected $actualError;
+    protected $actualException;
 
     /**
      * @var
@@ -23,16 +23,22 @@ class ErrorException extends \ErrorException
     protected $context;
 
     /**
+     * @var
+     */
+    protected $handler;
+
+    /**
      * ErrorException constructor.
      *
      * @param string $message
-     * @param int $code
-     * @param int $severity
+     * @param int    $code
+     * @param int    $severity
      * @param string $filename
-     * @param int $lineno
-     * @param \Exception $previous
-     * @param \Exception $previous
-     * @param array $context
+     * @param int    $lineno
+     * @param null   $previous
+     * @param null   $actualException
+     * @param array  $context
+     * @param string $handler
      */
     public function __construct(
         $message,
@@ -41,11 +47,13 @@ class ErrorException extends \ErrorException
         $filename,
         $lineno,
         $previous = null,
-        $actualError = null,
-        $context = []
+        $actualException = null,
+        $context = [],
+        $handler = 'UNKNOWN'
     ) {
-        $this->actualError = $actualError;
+        $this->actualException = $actualException;
         $this->context = $context;
+        $this->handler = $handler;
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
     }
 
@@ -56,7 +64,11 @@ class ErrorException extends \ErrorException
      */
     public function getActualException()
     {
-        return $this->actualError;
+        if ($this->actualException instanceof \Throwable) {
+            return $this->actualException;
+        }
+
+        return $this;
     }
 
     /**
@@ -66,11 +78,7 @@ class ErrorException extends \ErrorException
      */
     public function getActualExceptionClass()
     {
-        if ($this->actualError instanceof \stdClass) {
-            return get_class($this->actualError);
-        }
-
-        return get_class($this);
+        return get_class($this->getActualException());
     }
 
     /**
@@ -81,11 +89,7 @@ class ErrorException extends \ErrorException
      */
     public function throwActual()
     {
-        if ($this->actualError instanceof \Throwable) {
-            throw $this->actualError;
-        }
-
-        throw $this;
+        throw $this->getActualException();
     }
 
     /**
@@ -96,5 +100,37 @@ class ErrorException extends \ErrorException
     public function getContext()
     {
         return $this->context;
+    }
+
+    /**
+     * setHandler
+     *
+     * @param string $handler
+     *
+     * @return void
+     */
+    public function setHandler($handler)
+    {
+        $this->handler = $handler;
+    }
+
+    /**
+     * getHandler
+     *
+     * @return string
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
+     * toArray
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }

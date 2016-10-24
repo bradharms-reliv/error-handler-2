@@ -2,8 +2,7 @@
 
 namespace RcmErrorHandler2\Service;
 
-use RcmErrorHandler\Handler\Handler;
-use RcmErrorHandler\Model\Config;
+use RcmErrorHandler2\Handler\Handler;
 
 /**
  * Class PhpErrorHandlerManager
@@ -28,15 +27,14 @@ class PhpErrorHandlerManager
     /**
      * setHandlers
      *
-     * @param Config  $config
      * @param Handler $handler
      *
      * @return void
      */
-    public static function setHandlers(Config $config, Handler $handler)
+    public static function setHandlers(Handler $handler)
     {
-        self::setExceptionHandler($config, $handler);
-        self::setErrorHandler($config, $handler);
+        self::setExceptionHandler($handler);
+        self::setErrorHandler($handler);
     }
 
     /**

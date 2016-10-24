@@ -2,7 +2,7 @@
 
 namespace RcmErrorHandler2\Formatter;
 
-use RcmErrorHandler2\Core\Config;
+use RcmErrorHandler2\Config\Config;
 
 /**
  * Class AbstractSummaryFormatter

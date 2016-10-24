@@ -12,7 +12,7 @@ use Zend\EventManager\Event;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class BasicZfThrowable extends AbstractThrowable implements ZfThrowable
+class BasicZfThrowable extends AbstractThrowable implements ZfThrowable, Handler
 {
     /**
      * handle

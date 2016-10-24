@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler2\Core;
+namespace RcmErrorHandler2\Config;
 
 /**
  * Class BasicConfig

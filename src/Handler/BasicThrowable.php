@@ -10,7 +10,7 @@ namespace RcmErrorHandler2\Handler;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class BasicThrowable extends AbstractThrowable
+class BasicThrowable extends AbstractThrowable implements Handler
 {
 
 }

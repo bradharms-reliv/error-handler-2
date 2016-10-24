@@ -14,6 +14,19 @@ use Zend\Diactoros\Response;
  */
 class BasicErrorResponse extends Response implements ErrorResponse
 {
+    /**
+     * @var bool
+     */
+    protected $complete = false;
+
+    /**
+     * BasicErrorResponse constructor.
+     *
+     * @param \Psr\Http\Message\StreamInterface|resource|string $body
+     * @param int                                               $status
+     * @param array                                             $headers
+     * @param bool                                              $normalErrorHandlerContinues
+     */
     public function __construct($body, $status, array $headers, $normalErrorHandlerContinues = true)
     {
         $this->normalErrorHandlerContinues = $normalErrorHandlerContinues;
@@ -46,6 +59,69 @@ class BasicErrorResponse extends Response implements ErrorResponse
     {
         $new = clone $this;
         $new->normalErrorHandlerContinues = $normalErrorHandlerContinues;
+
         return $new;
+    }
+
+    /**
+     * Write data to the response body
+     *
+     * Proxies to the underlying stream and writes the provided data to it.
+     *
+     * @param string $data
+     *
+     * @return self
+     * @throws \RuntimeException if response is already completed
+     */
+    public function write($data)
+    {
+        if ($this->complete) {
+            throw new \RuntimeException(__METHOD__ . ' is already complete');
+        }
+
+        $this->getBody()->write($data);
+
+        return $this;
+    }
+
+    /**
+     * Mark the response as complete
+     *
+     * A completed response should no longer allow manipulation of either
+     * headers or the content body.
+     *
+     * If $data is passed, that data should be written to the response body
+     * prior to marking the response as complete.
+     *
+     * @param string $data
+     *
+     * @return self
+     */
+    public function end($data = null)
+    {
+        if ($this->complete) {
+            return $this;
+        }
+
+        if ($data) {
+            $this->write($data);
+        }
+
+        $new = clone $this;
+        $new->complete = true;
+
+        return $new;
+    }
+
+    /**
+     * Indicate whether or not the response is complete.
+     *
+     * I.e., if end() has previously been called.
+     *
+     * @return bool
+     */
+    public function isComplete()
+    {
+        return $this->complete;
     }
 }

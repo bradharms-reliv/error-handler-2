@@ -2,7 +2,7 @@
 
 namespace RcmErrorHandler2\Middleware;
 
-use RcmErrorHandler2\Core\Config;
+use RcmErrorHandler2\Config\Config;
 use RcmErrorHandler2\Formatter\Formatter;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;

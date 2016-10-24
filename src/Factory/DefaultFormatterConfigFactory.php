@@ -3,8 +3,8 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\DefaultFormatterConfig;
-use RcmErrorHandler2\Core\RcmErrorHandler2Config;
+use RcmErrorHandler2\Config\DefaultFormatterConfig;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 
 /**
  * Class DefaultFormatterConfigFactory

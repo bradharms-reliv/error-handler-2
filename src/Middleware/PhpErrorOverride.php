@@ -32,7 +32,7 @@ class PhpErrorOverride
      *
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $this->phpErrorOverrideService->override();
 

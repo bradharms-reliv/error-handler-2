@@ -5,8 +5,8 @@ namespace RcmErrorHandler2\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Handler\Throwable;
-use RcmErrorHandler2\Http\BasicErrorRequest;
 use RcmErrorHandler2\Http\BasicErrorResponse;
+use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 
 /**
  * Class FinalHandler
@@ -53,11 +53,9 @@ class FinalHandler
 
             $errorException = $this->handler->getErrorException($err);
 
-            $errorRequest = new BasicErrorRequest(
-                $request->getUri(),
-                $request->getMethod(),
-                $request->getBody(),
-                $request->getHeaders(),
+            $errorException->setHandler(static::class);
+
+            $errorRequest = ErrorServerRequestFactory::errorRequestFromGlobals(
                 $errorException
             );
 
@@ -68,7 +66,6 @@ class FinalHandler
             );
 
             $response = $this->handler->notify($errorRequest, $errorResponse);
-
             return $response;
         }
 

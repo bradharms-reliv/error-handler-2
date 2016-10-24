@@ -2,6 +2,8 @@
 
 namespace RcmErrorHandler2\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 
@@ -31,5 +33,5 @@ interface ErrorDisplay
      *
      * @return callable
      */
-    public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null);
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null);
 }

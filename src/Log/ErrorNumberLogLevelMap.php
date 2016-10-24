@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler\Log;
+namespace RcmErrorHandler2\Log;
 
 use Psr\Log\LogLevel;
 

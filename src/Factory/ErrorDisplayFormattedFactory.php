@@ -3,7 +3,7 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\DefaultFormatterConfig;
+use RcmErrorHandler2\Config\DefaultFormatterConfig;
 use RcmErrorHandler2\Formatter\Formatter;
 use RcmErrorHandler2\Middleware\ErrorDisplayFormatted;
 

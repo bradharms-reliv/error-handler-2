@@ -2,7 +2,9 @@
 
 namespace RcmErrorHandler2\Handler;
 
+use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
+use RcmErrorHandler2\Middleware\MiddlewarePipe;
 use RcmErrorHandler2\Observer\Observer;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\ErrorRequest;
@@ -11,7 +13,6 @@ use RcmErrorHandler2\Middleware\ErrorDisplay;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\PhpErrorSettings;
 use RcmErrorHandler2\Service\PhpServer;
-use Zend\Stratigility\MiddlewarePipe;
 
 /**
  * Abstract Class AbstractHandler
@@ -24,9 +25,24 @@ use Zend\Stratigility\MiddlewarePipe;
 abstract class AbstractHandler implements Handler
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @var array
+     */
+    protected $observerServiceNames = [];
+
+    /**
      * @var array [{Observer}, ...]
      */
     protected $observers = [];
+
+    /**
+     * @var array
+     */
+    protected $errorDisplaysServiceNames = [];
 
     /**
      * @var array [{ErrorDisplay}, ...]
@@ -41,23 +57,22 @@ abstract class AbstractHandler implements Handler
     /**
      * AbstractHandler constructor.
      *
-     * @param array $observers     [{Observer}]
-     * @param array $errorDisplays [{ErrorDisplay}]
-     * @param ErrorDisplayFinal $errorDisplayFinal
+     * @param ContainerInterface $container
+     * @param array              $observerServiceNames
+     * @param array              $errorDisplaysServiceNames
+     * @param ErrorDisplayFinal  $errorDisplayFinal
      */
     public function __construct(
-        array $observers,
-        array $errorDisplays,
+        $container,
+        array $observerServiceNames,
+        array $errorDisplaysServiceNames,
         ErrorDisplayFinal $errorDisplayFinal
     ) {
-        foreach ($observers as $observer) {
-            $this->registerObserver($observer);
-        }
-
-        foreach ($errorDisplays as $errorDisplay) {
-            $this->registerErrorDisplay($errorDisplay);
-        }
-
+        $this->container = $container;
+        $this->observerServiceNames = $observerServiceNames;
+        $this->errorDisplaysServiceNames = $errorDisplaysServiceNames;
+        // @todo register these at run-time for efficiency.
+        $this->registerServices();
         $this->errorDisplayFinal = $errorDisplayFinal;
     }
 
@@ -188,5 +203,23 @@ abstract class AbstractHandler implements Handler
         $body = $response->getBody();
 
         echo $body->getContents();
+    }
+
+    /**
+     * registerServices
+     *
+     * @return void
+     */
+    protected function registerServices()
+    {
+        foreach ($this->observerServiceNames as $observerName => $options) {
+            $observerService = $this->container->get($observerName);
+            $this->registerObserver($observerService);
+        }
+
+        foreach ($this->errorDisplaysServiceNames as $errorDisplayName) {
+            $errorDisplaysService = $this->container->get($errorDisplayName);
+            $this->registerErrorDisplay($errorDisplaysService);
+        }
     }
 }

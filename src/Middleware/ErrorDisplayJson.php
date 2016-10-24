@@ -2,6 +2,8 @@
 
 namespace RcmErrorHandler2\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionExtractor;
@@ -25,7 +27,7 @@ class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
      *
      * @return callable
      */
-    public function __invoke(ErrorRequest $request, ErrorResponse $response, callable $next = null)
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
         $errorException = $request->getError();
 

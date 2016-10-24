@@ -3,10 +3,10 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\ObserverConfig;
+use RcmErrorHandler2\Config\ObserverConfig;
 use RcmErrorHandler2\Formatter\SummaryFormatter;
 use RcmErrorHandler2\Formatter\TraceFormatter;
-use RcmErrorHandler2\Log\LoggerObserver;
+use RcmErrorHandler2\Observer\LoggerObserver;
 
 /**
  * Class LoggerObserverFactory

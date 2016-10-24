@@ -3,12 +3,10 @@
 namespace RcmErrorHandler2\Handler;
 
 use RcmErrorHandler2\Exception\ErrorException;
-use RcmErrorHandler2\Http\BasicErrorRequest;
 use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
-use RcmErrorHandler2\Service\PhpErrorHandlerManager;
+use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorSettings;
-use RcmErrorHandler2\Service\PhpServer;
 
 /**
  * Class AbstractError
@@ -52,11 +50,7 @@ class AbstractError extends AbstractHandler implements Error
             $errcontext
         );
 
-        $request = new BasicErrorRequest(
-            '/',
-            PhpServer::getRequestMethod(),
-            PhpServer::getRequestBody(),
-            PhpServer::getRequestHeaders(),
+        $request = ErrorServerRequestFactory::errorRequestFromGlobals(
             $errorException
         );
 
@@ -102,7 +96,8 @@ class AbstractError extends AbstractHandler implements Error
             $errstr,
             $errfile,
             $errline,
-            $errcontext
+            $errcontext,
+            static::class
         );
     }
 }

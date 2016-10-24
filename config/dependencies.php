@@ -11,11 +11,13 @@ return [
         /**
          * Config
          */
-        \RcmErrorHandler2\Core\DefaultFormatterConfig::class
+        \RcmErrorHandler2\Config\DefaultFormatterConfig::class
         => \RcmErrorHandler2\Factory\DefaultFormatterConfigFactory::class,
-        \RcmErrorHandler2\Core\ObserverConfig::class
+        \RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig::class =>
+            \RcmErrorHandler2\Factory\ErrorDisplayMiddlewareConfigFactory::class,
+        \RcmErrorHandler2\Config\ObserverConfig::class
         => \RcmErrorHandler2\Factory\ObserverConfigFactory::class,
-        \RcmErrorHandler2\Core\RcmErrorHandler2Config::class
+        \RcmErrorHandler2\Config\RcmErrorHandler2Config::class
         => \RcmErrorHandler2\Factory\RcmErrorHandler2ConfigFactory::class,
 
         /**
@@ -25,6 +27,8 @@ return [
         => \RcmErrorHandler2\Factory\HandlerErrorFactory::class,
         \RcmErrorHandler2\Handler\Throwable::class
         => \RcmErrorHandler2\Factory\HandlerThrowableFactory::class,
+        \RcmErrorHandler2\Handler\BasicZfThrowable::class
+        => \RcmErrorHandler2\Factory\HandlerZfThrowableFactory::class,
 
         /**
          * Formatter Services
@@ -44,7 +48,7 @@ return [
         /**
          * Observers
          */
-        \RcmErrorHandler2\Log\LoggerObserver::class
+        \RcmErrorHandler2\Observer\LoggerObserver::class
         => \RcmErrorHandler2\Factory\LoggerObserverFactory::class,
 
         /**
@@ -63,10 +67,19 @@ return [
         \RcmErrorHandler2\Middleware\PhpErrorOverride::class
         => \RcmErrorHandler2\Factory\MiddlewarePhpErrorOverrideFactory::class,
 
+        \RcmErrorHandler2\Middleware\TestConfigController::class
+        => \RcmErrorHandler2\Factory\MiddlewareTestConfigControllerFactory::class,
+        \RcmErrorHandler2\Middleware\TestErrorController::class
+        => \RcmErrorHandler2\Factory\MiddlewareTestErrorControllerFactory::class,
+        \RcmErrorHandler2\Middleware\TestExceptionController::class
+        => \RcmErrorHandler2\Factory\MiddlewareTestExceptionControllerFactory::class,
+
         /**
          * Services
          */
         \RcmErrorHandler2\Service\PhpErrorOverride::class
         => \RcmErrorHandler2\Factory\ServicePhpErrorOverrideFactory::class,
+        \RcmErrorHandler2\Service\Environment::class
+        => \RcmErrorHandler2\Factory\RelivEnvironmentFactory::class,
     ],
 ];

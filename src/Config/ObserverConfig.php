@@ -1,9 +1,9 @@
 <?php
 
-namespace RcmErrorHandler2\Core;
+namespace RcmErrorHandler2\Config;
 
 /**
- * Class BasicConfig
+ * Class ObserverConfig
  *
  * PHP version 5
  *
@@ -15,6 +15,6 @@ namespace RcmErrorHandler2\Core;
  * @version   Release: <package_version>
  * @link      https://github.com/reliv
  */
-class BasicConfig extends AbstractConfig implements Config
+class ObserverConfig extends BasicConfig
 {
 } 

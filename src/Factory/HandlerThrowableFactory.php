@@ -3,8 +3,8 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Core\ErrorDisplayMiddlewareConfig;
-use RcmErrorHandler2\Core\ObserverConfig;
+use RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig;
+use RcmErrorHandler2\Config\ObserverConfig;
 use RcmErrorHandler2\Handler\BasicThrowable;
 use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 
@@ -35,6 +35,7 @@ class HandlerThrowableFactory
         $errorDisplayFinal = $container->get(\RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic::class);
 
         return new BasicThrowable(
+            $container,
             $observerConfig->toArray(),
             $errorDisplayMiddleware->toArray(),
             $errorDisplayFinal

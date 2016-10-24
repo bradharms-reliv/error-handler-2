@@ -40,20 +40,22 @@ class ErrorExceptionBuilder
     /**
      * buildFromError
      *
-     * @param int    $errno   severity
-     * @param int    $errstr  message
-     * @param string $errfile file
-     * @param int    $errline line
+     * @param int    $errno
+     * @param int    $errstr
+     * @param string $errfile
+     * @param int    $errline
      * @param array  $errcontext
+     * @param string $handler
      *
-     * @return ErrorException
+     * @return mixed
      */
     public static function buildFromError(
         $errno = 0,
         $errstr = 1,
         $errfile = __FILE__,
         $errline = __LINE__,
-        $errcontext = []
+        $errcontext = [],
+        $handler = 'UNKNOWN'
     ) {
         $prev = self::getPrevious();
 
@@ -66,7 +68,9 @@ class ErrorExceptionBuilder
             $errfile,
             $errline,
             $prev,
-            $errcontext
+            null,
+            $errcontext,
+            $handler
         );
     }
 
@@ -122,11 +126,14 @@ class ErrorExceptionBuilder
      * buildFromThrowable
      *
      * @param \Throwable|\Exception $exception
+     * @param string                $handler
      *
      * @return ErrorException
      */
-    public static function buildFromThrowable($exception)
-    {
+    public static function buildFromThrowable(
+        $exception,
+        $handler = 'UNKNOWN'
+    ) {
         $errorException = $exception;
 
         if (!$errorException instanceof ErrorException) {
@@ -137,8 +144,10 @@ class ErrorExceptionBuilder
                 E_USER_ERROR,
                 $exception->getFile(),
                 $exception->getLine(),
+                $exception->getPrevious(),
                 $exception,
-                []
+                [],
+                $handler
             );
         }
 
