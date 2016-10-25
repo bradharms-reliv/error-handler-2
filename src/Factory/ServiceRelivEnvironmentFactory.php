@@ -3,27 +3,27 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Formatter\HtmlTraceFormatter;
+use RcmErrorHandler2\Service\RelivEnvironment;
 
 /**
- * HtmlTraceFormatterFactory
+ * Class ServiceRelivEnvironmentFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class HtmlTraceFormatterFactory
+class ServiceRelivEnvironmentFactory
 {
     /**
      * __invoke
      *
      * @param ContainerInterface $container
      *
-     * @return HtmlTraceFormatter
+     * @return RelivEnvironment
      */
     public function __invoke($container)
     {
-        return new HtmlTraceFormatter();
+        return new RelivEnvironment();
     }
 }

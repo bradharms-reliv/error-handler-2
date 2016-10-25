@@ -4,9 +4,14 @@ namespace RcmErrorHandler2\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
+use RcmErrorHandler2\Handler\BasicThrowable;
 use RcmErrorHandler2\Handler\Throwable;
 use RcmErrorHandler2\Http\BasicErrorResponse;
+use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\ErrorServerRequestFactory;
+use RcmErrorHandler2\Service\PhpErrorHandlerManager;
 
 /**
  * Class FinalHandler
@@ -19,17 +24,34 @@ use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 class FinalHandler
 {
     /**
-     * @var Throwable
+     * @var RcmErrorHandler2Config
+     */
+    protected $rcmErrorHandler2Config;
+
+    /**
+     * @var ErrorResponseConfig
+     */
+    protected $errorResponseConfig;
+
+    /**
+     * @var BasicThrowable|Throwable
      */
     protected $handler;
 
     /**
      * FinalHandler constructor.
      *
-     * @param Throwable $handler
+     * @param RcmErrorHandler2Config $rcmErrorHandler2Config
+     * @param ErrorResponseConfig    $errorResponseConfig
+     * @param Throwable              $handler
      */
-    public function __construct(Throwable $handler)
-    {
+    public function __construct(
+        RcmErrorHandler2Config $rcmErrorHandler2Config,
+        ErrorResponseConfig $errorResponseConfig,
+        Throwable $handler
+    ) {
+        $this->rcmErrorHandler2Config = $rcmErrorHandler2Config;
+        $this->errorResponseConfig = $errorResponseConfig;
         $this->handler = $handler;
     }
 
@@ -45,35 +67,28 @@ class FinalHandler
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $err = null)
     {
-        if (!$err) {
-            return $response;
+        $errorException = ErrorExceptionBuilder::buildFromUnknown($err, static::class);
+
+        // Check if we handle these
+        $overrideExceptions = $this->rcmErrorHandler2Config->get('overrideExceptions', false);
+
+        if (!$overrideExceptions) {
+            PhpErrorHandlerManager::throwWithOriginalExceptionHandler($errorException->getActualException());
+            die();
         }
 
-        if ($err instanceof \Exception || $err instanceof \Throwable) {
+        $errorRequest = ErrorServerRequestFactory::errorRequestFromGlobals(
+            $errorException
+        );
 
-            $errorException = $this->handler->getErrorException($err);
+        $errorResponse = new BasicErrorResponse(
+            $this->errorResponseConfig->get('body'),
+            $this->errorResponseConfig->get('status'),
+            $this->errorResponseConfig->get('headers')
+        );
 
-            $errorException->setHandler(static::class);
+        $response = $this->handler->notify($errorRequest, $errorResponse);
 
-            $errorRequest = ErrorServerRequestFactory::errorRequestFromGlobals(
-                $errorException
-            );
-
-            $errorResponse = new BasicErrorResponse(
-                'php://memory',
-                500,
-                []
-            );
-
-            $response = $this->handler->notify($errorRequest, $errorResponse);
-            return $response;
-        }
-
-        // @todo Could handle the case better
-        $content = json_encode($err, JSON_PRETTY_PRINT);
-        $body = $response->getBody();
-        $body->write("FinalError: \n" . $content);
-
-        return $response->withBody($body);
+        return $response;
     }
 }

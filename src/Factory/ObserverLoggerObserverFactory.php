@@ -9,14 +9,14 @@ use RcmErrorHandler2\Formatter\TraceFormatter;
 use RcmErrorHandler2\Observer\LoggerObserver;
 
 /**
- * Class LoggerObserverFactory
+ * Class ObserverLoggerObserverFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class LoggerObserverFactory
+class ObserverLoggerObserverFactory
 {
     /**
      * __invoke

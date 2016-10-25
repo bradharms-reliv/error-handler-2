@@ -3,6 +3,7 @@
 namespace RcmErrorHandler2\Handler;
 
 use Interop\Container\ContainerInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 use RcmErrorHandler2\Middleware\MiddlewarePipe;
 use RcmErrorHandler2\Observer\Observer;
@@ -13,6 +14,7 @@ use RcmErrorHandler2\Middleware\ErrorDisplay;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\PhpErrorSettings;
 use RcmErrorHandler2\Service\PhpServer;
+use Zend\Diactoros\Response\EmitterInterface;
 
 /**
  * Abstract Class AbstractHandler
@@ -55,18 +57,31 @@ abstract class AbstractHandler implements Handler
     protected $errorDisplayFinal;
 
     /**
+     * @var ErrorResponseConfig
+     */
+    protected $errorResponseConfig;
+
+    /**
+     * @var EmitterInterface
+     */
+    protected $emitter;
+
+    /**
      * AbstractHandler constructor.
      *
-     * @param ContainerInterface $container
-     * @param array              $observerServiceNames
-     * @param array              $errorDisplaysServiceNames
-     * @param ErrorDisplayFinal  $errorDisplayFinal
+     * @param                     $container
+     * @param array               $observerServiceNames
+     * @param array               $errorDisplaysServiceNames
+     * @param ErrorDisplayFinal   $errorDisplayFinal
+     * @param ErrorResponseConfig $errorResponseConfig
      */
     public function __construct(
         $container,
         array $observerServiceNames,
         array $errorDisplaysServiceNames,
-        ErrorDisplayFinal $errorDisplayFinal
+        ErrorDisplayFinal $errorDisplayFinal,
+        ErrorResponseConfig $errorResponseConfig,
+        EmitterInterface $emitter
     ) {
         $this->container = $container;
         $this->observerServiceNames = $observerServiceNames;
@@ -74,6 +89,8 @@ abstract class AbstractHandler implements Handler
         // @todo register these at run-time for efficiency.
         $this->registerServices();
         $this->errorDisplayFinal = $errorDisplayFinal;
+        $this->errorResponseConfig = $errorResponseConfig;
+        $this->emitter = $emitter;
     }
 
     /**
@@ -154,7 +171,10 @@ abstract class AbstractHandler implements Handler
     public function getResponse(ErrorRequest $request, ErrorResponse $response)
     {
         // We set the initial status to a default
-        $response = $response->withHeader('status', '500');
+        $response = $response->withHeader(
+            'status',
+            (string)$this->errorResponseConfig->get('status', 500)
+        );
 
         $final = $this->errorDisplayFinal;
 
@@ -198,14 +218,28 @@ abstract class AbstractHandler implements Handler
      */
     public function display(ErrorResponse $response)
     {
-        $headers = $response->getHeaders();
-
-        PhpServer::setResponseHeaders($headers);
-
-        $body = $response->getBody();
-
-        echo $body->getContents();
+        $this->emitter->emit($response);
     }
+//
+//    /**
+//     * getDisplay
+//     *
+//     * @param ErrorResponse $response
+//     *
+//     * @return string
+//     */
+//    public function getDisplay(ErrorResponse $response)
+//    {
+//        $headers = $response->getHeaders();
+//
+//        // PhpServer::setResponseHeaders($headers);
+//
+//        $body = $response->getBody();
+//
+//        var_dump('getDisplay', $body->getContents());
+//
+//        return $body->getContents();
+//    }
 
     /**
      * registerServices

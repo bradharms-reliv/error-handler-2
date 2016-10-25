@@ -2,8 +2,11 @@
 
 namespace RcmErrorHandler2\Handler;
 
+use Interop\Container\ContainerInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\BasicErrorResponse;
+use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorHandlerManager;
@@ -34,9 +37,9 @@ abstract class AbstractThrowable extends AbstractHandler implements Throwable
         );
 
         $response = new BasicErrorResponse(
-            'php://memory',
-            500,
-            []
+            $this->errorResponseConfig->get('body'),
+            $this->errorResponseConfig->get('status'),
+            $this->errorResponseConfig->get('headers')
         );
 
         $errorResponse = $this->notify($request, $response);

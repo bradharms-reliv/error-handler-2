@@ -12,13 +12,36 @@ return [
          * Config
          */
         \RcmErrorHandler2\Config\DefaultFormatterConfig::class
-        => \RcmErrorHandler2\Factory\DefaultFormatterConfigFactory::class,
-        \RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig::class =>
-            \RcmErrorHandler2\Factory\ErrorDisplayMiddlewareConfigFactory::class,
+        => \RcmErrorHandler2\Factory\ConfigDefaultFormatterConfigFactory::class,
+        \RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig::class
+        => \RcmErrorHandler2\Factory\ConfigErrorDisplayMiddlewareConfigFactory::class,
+        \RcmErrorHandler2\Config\ErrorResponseConfig::class
+        => \RcmErrorHandler2\Factory\ConfigErrorResponseConfigFactory::class,
         \RcmErrorHandler2\Config\ObserverConfig::class
-        => \RcmErrorHandler2\Factory\ObserverConfigFactory::class,
+        => \RcmErrorHandler2\Factory\ConfigObserverConfigFactory::class,
         \RcmErrorHandler2\Config\RcmErrorHandler2Config::class
-        => \RcmErrorHandler2\Factory\RcmErrorHandler2ConfigFactory::class,
+        => \RcmErrorHandler2\Factory\ConfigRcmErrorHandler2ConfigFactory::class,
+
+        /**
+         * Formatter Services
+         */
+        // Formatter Default
+        \RcmErrorHandler2\Formatter\Formatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlFormatterFactory::class,
+        // SummaryFormatter Default
+        \RcmErrorHandler2\Formatter\SummaryFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlSummaryFormatterFactory::class,
+        // TraceFormatter Default
+        \RcmErrorHandler2\Formatter\TraceFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlTraceFormatterFactory::class,
+
+        // Others
+        \RcmErrorHandler2\Formatter\HtmlFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlFormatterFactory::class,
+        \RcmErrorHandler2\Formatter\HtmlSummaryFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlSummaryFormatterFactory::class,
+        \RcmErrorHandler2\Formatter\HtmlTraceFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterHtmlTraceFormatterFactory::class,
 
         /**
          * Handlers
@@ -31,25 +54,10 @@ return [
         => \RcmErrorHandler2\Factory\HandlerZfThrowableFactory::class,
 
         /**
-         * Formatter Services
+         * Emitters
          */
-        // Formatter Default
-        \RcmErrorHandler2\Formatter\Formatter::class
-        => \RcmErrorHandler2\Factory\HtmlFormatterFactory::class,
-        // SummaryFormatter Default
-        \RcmErrorHandler2\Formatter\SummaryFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlSummaryFormatterFactory::class,
-        // TraceFormatter Default
-        \RcmErrorHandler2\Formatter\TraceFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlTraceFormatterFactory::class,
-
-        // Others
-        \RcmErrorHandler2\Formatter\HtmlFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlFormatterFactory::class,
-        \RcmErrorHandler2\Formatter\HtmlSummaryFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlSummaryFormatterFactory::class,
-        \RcmErrorHandler2\Formatter\HtmlTraceFormatter::class
-        => \RcmErrorHandler2\Factory\HtmlTraceFormatterFactory::class,
+        'RcmErrorHandler2\Http\Emitter'
+        => \RcmErrorHandler2\Factory\HttpExpressiveEmitterFactory::class,
 
         /**
          * Loggers
@@ -61,17 +69,18 @@ return [
          * Observers
          */
         \RcmErrorHandler2\Observer\LoggerObserver::class
-        => \RcmErrorHandler2\Factory\LoggerObserverFactory::class,
+        => \RcmErrorHandler2\Factory\ObserverLoggerObserverFactory::class,
 
         /**
          * Final Display Default
          */
         \RcmErrorHandler2\Middleware\ErrorDisplayFinal::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
 
         /**
          * Middleware
          */
+        // ErrorDisplay
         \RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
         \RcmErrorHandler2\Middleware\ErrorDisplayFinalDump::class
@@ -80,6 +89,7 @@ return [
         => \RcmErrorHandler2\Factory\ErrorDisplayFormattedFactory::class,
         \RcmErrorHandler2\Middleware\ErrorDisplayJson::class
         => \RcmErrorHandler2\Factory\ErrorDisplayJsonFactory::class,
+        //
         \RcmErrorHandler2\Middleware\FinalHandler::class
         => \RcmErrorHandler2\Factory\MiddlewareFinalHandlerFactory::class,
         \RcmErrorHandler2\Middleware\PhpErrorOverride::class
@@ -98,6 +108,6 @@ return [
         \RcmErrorHandler2\Service\PhpErrorOverride::class
         => \RcmErrorHandler2\Factory\ServicePhpErrorOverrideFactory::class,
         \RcmErrorHandler2\Service\Environment::class
-        => \RcmErrorHandler2\Factory\RelivEnvironmentFactory::class,
+        => \RcmErrorHandler2\Factory\ServiceRelivEnvironmentFactory::class,
     ],
 ];

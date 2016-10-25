@@ -4,6 +4,7 @@ namespace RcmErrorHandler2\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
@@ -21,13 +22,29 @@ use Zend\Diactoros\Stream;
 class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
 {
     /**
+     * @var ErrorResponseConfig
+     */
+    protected $errorResponseConfig;
+
+    /**
+     * ErrorDisplayJson constructor.
+     *
+     * @param ErrorResponseConfig $errorResponseConfig
+     */
+    public function __construct(
+        ErrorResponseConfig $errorResponseConfig
+    ) {
+        $this->errorResponseConfig = $errorResponseConfig;
+    }
+
+    /**
      * __invoke
      *
      * @param ErrorRequest  $request
      * @param ErrorResponse $response
      * @param callable|null $next
      *
-     * @return callable
+     * @return ErrorResponse
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
@@ -54,7 +71,9 @@ class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
 
         // only our error please
         $response = new BasicErrorResponse(
-            $body, 500, ['content-type', ['application/json']], false
+            $body,
+            $this->errorResponseConfig->get('status'),
+            ['content-type', ['application/json']], false
         );
 
         return $response;

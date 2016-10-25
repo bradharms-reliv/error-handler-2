@@ -7,14 +7,14 @@ use RcmErrorHandler2\Config\BasicConfig;
 use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 
 /**
- * Class RcmErrorHandler2ConfigFactory
+ * Class ConfigRcmErrorHandler2ConfigFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class RcmErrorHandler2ConfigFactory
+class ConfigRcmErrorHandler2ConfigFactory
 {
     /**
      * __invoke

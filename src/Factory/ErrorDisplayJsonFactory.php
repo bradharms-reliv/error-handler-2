@@ -3,6 +3,7 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Middleware\ErrorDisplayJson;
 
 /**
@@ -24,6 +25,11 @@ class ErrorDisplayJsonFactory
      */
     public function __invoke($container)
     {
-        return new ErrorDisplayJson();
+        /** @var ErrorResponseConfig $errorResponseConfig */
+        $errorResponseConfig = $container->get(ErrorResponseConfig::class);
+
+        return new ErrorDisplayJson(
+            $errorResponseConfig
+        );
     }
 }

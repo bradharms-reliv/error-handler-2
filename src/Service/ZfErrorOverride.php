@@ -52,31 +52,35 @@ class ZfErrorOverride
      */
     public function override()
     {
-        if ($this->rcmErrorHandler2Config->get('overrideExceptions', false)) {
+        $overrideZfExceptions = $this->rcmErrorHandler2Config->get('overrideZfExceptions', false);
 
-            $application = $this->event->getApplication();
-            $eventManager = $application->getEventManager();
-
-            /** @var BasicZfThrowable $handler */
-            $handler = $this->container->get(ZfThrowable::class);
-
-            //handle the dispatch error (exception)
-            $eventManager->attach(
-                \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
-                [
-                    $handler,
-                    'handleEvent'
-                ]
-            );
-
-            //handle the view render error (exception)
-            $eventManager->attach(
-                \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
-                [
-                    $handler,
-                    'handleEvent'
-                ]
-            );
+        if (!$overrideZfExceptions) {
+            return;
         }
+
+        $application = $this->event->getApplication();
+        $eventManager = $application->getEventManager();
+
+        /** @var BasicZfThrowable $handler */
+        $handler = $this->container->get(ZfThrowable::class);
+
+        //handle the dispatch error (exception)
+        $eventManager->attach(
+            \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
+            [
+                $handler,
+                'handleEvent'
+            ]
+        );
+
+        //handle the view render error (exception)
+        $eventManager->attach(
+            \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
+            [
+                $handler,
+                'handleEvent'
+            ]
+        );
+
     }
 }

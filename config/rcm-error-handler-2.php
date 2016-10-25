@@ -14,6 +14,11 @@ return [
     'overrideExceptions' => false,
 
     /**
+     * enable Zend Framework Exception overrides (false = off)
+     */
+    'overrideZfExceptions' => false,
+
+    /**
      * Options for the default formatter
      */
     'defaultFormatter' => [
@@ -23,8 +28,10 @@ return [
     /**
      * General Handler Options
      */
-    \RcmErrorHandler2\Handler\Handler::class => [
-        'serverErrorStatusCode' => 500,
+    'errorResponse' => [
+        'body' => 'php://memory', // stream
+        'status' => 500, // status code
+        'headers' => [], // ['{name}' => ['value1', 'value2' ...]]
     ],
 
     /**

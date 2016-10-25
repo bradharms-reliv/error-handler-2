@@ -153,4 +153,62 @@ class ErrorExceptionBuilder
 
         return $errorException;
     }
+
+    /**
+     * buildFromUnknown
+     *
+     * @param        $err
+     * @param string $handler
+     *
+     * @return ErrorException
+     */
+    public static function buildFromUnknown(
+        $err,
+        $handler = 'UNKNOWN'
+    ) {
+        if ($err instanceof ErrorException) {
+            return $err;
+        }
+
+        if ($err instanceof \Exception || $err instanceof \Throwable) {
+            return self::buildFromThrowable($err, $handler);
+        }
+
+        $message = 'GENERIC ERROR: ';
+        $code = 0;
+
+        if (empty($err)) {
+            $message = 'EMPTY ERROR: (' . json_encode($err) . ')';
+        }
+
+        if (is_string($err)) {
+            $message = $err;
+        }
+
+        if (is_int($err)) {
+            $code = $err;
+        }
+
+        if (is_array($err)) {
+            $message = $message . json_encode($err);
+        }
+
+        if (is_object($err)) {
+            $export = var_export($err, true);
+            $export = substr($export, 0, 255);
+            $message = $message . $export;
+        }
+
+        return new ErrorException(
+            $message,
+            $code,
+            E_USER_ERROR,
+            __FILE__,
+            __LINE__,
+            null,
+            null,
+            [],
+            $handler
+        );
+    }
 }

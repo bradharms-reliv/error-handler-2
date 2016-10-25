@@ -3,6 +3,8 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Handler\Throwable;
 use RcmErrorHandler2\Middleware\FinalHandler;
 
@@ -25,10 +27,18 @@ class MiddlewareFinalHandlerFactory
      */
     public function __invoke($container)
     {
+        /** @var RcmErrorHandler2Config $config */
+        $config = $container->get(RcmErrorHandler2Config::class);
+
+        /** @var ErrorResponseConfig $errorResponseConfig */
+        $errorResponseConfig = $container->get(ErrorResponseConfig::class);
+
         /** @var Throwable $throwableHandler */
         $throwableHandler = $container->get(Throwable::class);
 
         return new FinalHandler(
+            $config,
+            $errorResponseConfig,
             $throwableHandler
         );
     }

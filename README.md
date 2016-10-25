@@ -2,14 +2,23 @@
 
 Error handling and error handler over-riding with JS error logger
 
-1. Over-ride errors at the PHP level
-2. Over-ride exceptions at the PHP level
-3. Final error handling for middleware
-4. ZF error event listeners
+## Error over-rides ##
+
+- Over-ride errors at the PHP level
+- Over-ride exceptions at the PHP level
+- Final error handling for middleware
+- ZF error event listeners
+
+## Error Notification ##
+
+- When any error happens, notify the observers (could be logger, mailer, etc..)
+
+## Javascript Error Notification ##
+
+- Allows for the notification of JS errors
 
 ## Todo ##
 
 - Handling errors and exceptions in PHP means displaying errors as needed.
-- Implement Logger Observer
 - Implement Js Logger API
-- JSON log viewer
+    - Make JS available via public path
