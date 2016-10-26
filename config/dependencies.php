@@ -111,6 +111,9 @@ return [
         /**
          * Middleware
          */
+        // ClientErrorLoggerController
+        \RcmErrorHandler2\Middleware\ClientErrorLoggerController::class
+        => \RcmErrorHandler2\Factory\MiddlewareClientErrorControllerFactory::class,
         // FinalHandler
         \RcmErrorHandler2\Middleware\FinalHandler::class
         => \RcmErrorHandler2\Factory\MiddlewareFinalHandlerFactory::class,

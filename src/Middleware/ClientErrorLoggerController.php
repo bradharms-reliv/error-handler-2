@@ -3,6 +3,8 @@
 namespace RcmErrorHandler2\Middleware;
 
 use Interop\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use Zend\Stratigility\Http\Request;
 use Zend\Stratigility\Http\Response;
 
@@ -35,14 +37,14 @@ class ClientErrorLoggerController
      * __invoke
      *
      * @request
-     * [
-     *   'message' => 'some message',
-     *   'file' => '/some/url',
-     *   'line' => 123,
-     *   'description' => 'Some Description',
-     *   'trace' => '1# Some trace string'
-     *   'type' => 'ClientError'
-     * ];
+     * {
+     * "message": "some message",
+     * "file": "/some/url",
+     * "line": 123,
+     * "description": "Some Description",
+     * "trace": "1# Some trace string",
+     * "type": "ClientError"
+     * }
      *
      * @param Request       $request
      * @param Response      $response
@@ -87,13 +89,9 @@ class ClientErrorLoggerController
     protected function getLoggerConfig()
     {
         $serviceLocator = $this->getContainer();
-        $config = $serviceLocator->get('\RcmErrorHandler\Config');
+        $rcmErrorHandler2Config = $serviceLocator->get(RcmErrorHandler2Config::class);
 
-        $configs = $config->get('jsLogConfig', []);
-
-        if (empty($configs)) {
-            return [];
-        }
+        $configs = $rcmErrorHandler2Config->get('jsLogConfig', []);
 
         return $configs;
     }
@@ -114,12 +112,10 @@ class ClientErrorLoggerController
         $hasLogged = false;
 
         foreach ($loggerConfig['jsLoggers'] as $serviceName) {
-            if ($serviceLocator->has($serviceName)) {
-                /** @var \Zend\Log\LoggerInterface $logger */
-                $logger = $serviceLocator->get($serviceName);
-                $logger->err($message, $extra);
-                $hasLogged = true;
-            }
+            /** @var LoggerInterface $logger */
+            $logger = $serviceLocator->get($serviceName);
+            $logger->error($message, $extra);
+            $hasLogged = true;
         }
 
         return $hasLogged;
