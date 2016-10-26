@@ -19,7 +19,7 @@ return [
     'overrideZfExceptions' => false,
 
     /**
-     * Options for the default formatter
+     * Default formatter general options
      */
     'defaultFormatter' => [
 
@@ -47,8 +47,9 @@ return [
      * - Or call next if it does not display the error
      */
     'errorDisplayMiddleware' => [
-        \RcmErrorHandler2\Middleware\ErrorDisplayJson::class,
-        \RcmErrorHandler2\Middleware\ErrorDisplayFormatted::class,
+        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class,
+        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class,
+        // NOT COMPLETE: \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
     ],
 
     /**
@@ -62,7 +63,7 @@ return [
         \RcmErrorHandler2\Observer\LoggerObserver::class => [
             // Logger Services to use
             'loggers' => [
-                RcmErrorHandler2\Log\FileErrorLogger::class,
+                //RcmErrorHandler2\Log\FileErrorLogger::class,
                 //RcmErrorHandler2\Log\PhpErrorLogger::class,
                 //RcmErrorHandler\Log\VarDumpErrorLogger::class,
                 //Reliv\RcmJira\Log\JiraLoggerPsr::class,
@@ -122,6 +123,7 @@ return [
      */
     \RcmErrorHandler2\Log\FileErrorLogger::class => [
         'fileLogPath' => 'data/Logs',
+        'fileName' => 'rcm-error-handler-2-log',
     ],
 
     /**

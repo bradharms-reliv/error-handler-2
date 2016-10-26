@@ -1,21 +1,22 @@
 <?php
 
-namespace RcmErrorHandler2\Middleware;
+namespace RcmErrorHandler2\ErrorDisplay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
+use RcmErrorHandler2\Service\ErrorExceptionExtractor;
 
 /**
- * Class ErrorDisplayFinalBasic
+ * Class ErrorDisplayFinalDump
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayFinalBasic extends ErrorDisplayAbstract implements ErrorDisplayFinal
+class ErrorDisplayFinalDump extends ErrorDisplayFinalAbstract implements ErrorDisplayFinal
 {
     /**
      * __invoke
@@ -28,9 +29,20 @@ class ErrorDisplayFinalBasic extends ErrorDisplayAbstract implements ErrorDispla
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
-        $response = $response->withNormalErrorHandling(true);
+        $response = parent::__invoke($request, $response, $next);
         $body = $response->getBody();
-        $body->write('An error occurred:: ');
+
+        $errorException = $request->getError();
+
+        $result = ErrorExceptionExtractor::extractArray($errorException);
+
+        ob_start();
+        echo $this->errorDisplayConfig->get('finalMessage', '') . "\n\n";
+        var_dump($result);
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        $body->write($content);
 
         return $response->withBody($body);
     }

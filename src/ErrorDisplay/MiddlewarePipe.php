@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler2\Middleware;
+namespace RcmErrorHandler2\ErrorDisplay;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

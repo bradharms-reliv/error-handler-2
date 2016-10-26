@@ -7,7 +7,7 @@ use RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig;
 use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Config\ObserverConfig;
 use RcmErrorHandler2\Handler\BasicZfThrowable;
-use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
+use RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinal;
 use Zend\Diactoros\Response\EmitterInterface;
 
 /**
@@ -34,7 +34,7 @@ class HandlerZfThrowableFactory
         /** @var ErrorDisplayMiddlewareConfig $errorDisplayMiddleware */
         $errorDisplayMiddleware = $container->get(ErrorDisplayMiddlewareConfig::class);
         /** @var ErrorDisplayFinal $errorDisplayFinal */
-        $errorDisplayFinal = $container->get(\RcmErrorHandler2\Middleware\ErrorDisplayFinal::class);
+        $errorDisplayFinal = $container->get(\RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinal::class);
         /** @var ErrorResponseConfig $errorResponseConfig */
         $errorResponseConfig = $container->get(ErrorResponseConfig::class);
         /** @var EmitterInterface $emitter */

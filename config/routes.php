@@ -34,4 +34,11 @@ return [
         'options' => [],
         'allowed_methods' => ['GET'],
     ],
+    [
+        'name' => 'test.rcm-error-handler-2-warning',
+        'path' => '/test/rcm-error-handler-2-warning',
+        'middleware' => \RcmErrorHandler2\Middleware\TestWarningController::class,
+        'options' => [],
+        'allowed_methods' => ['GET'],
+    ],
 ];

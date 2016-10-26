@@ -3,7 +3,8 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic;
+use RcmErrorHandler2\Config\ErrorDisplayConfig;
+use RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalBasic;
 
 /**
  * Class ErrorDisplayFinalFactory
@@ -24,6 +25,10 @@ class ErrorDisplayFinalBasicFactory
      */
     public function __invoke($container)
     {
-        return new ErrorDisplayFinalBasic();
+        $errorDisplayConfig = $container->get(ErrorDisplayConfig::class);
+
+        return new ErrorDisplayFinalBasic(
+            $errorDisplayConfig
+        );
     }
 }

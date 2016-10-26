@@ -129,7 +129,7 @@ class PhpErrorHandlerManager
      */
     public static function throwWithOriginalExceptionHandler(\Throwable $exception)
     {
-        restore_error_handler();
+        restore_exception_handler();
         throw $exception;
     }
 

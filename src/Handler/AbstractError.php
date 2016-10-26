@@ -2,11 +2,8 @@
 
 namespace RcmErrorHandler2\Handler;
 
-use Interop\Container\ContainerInterface;
-use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\BasicErrorResponse;
-use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorSettings;

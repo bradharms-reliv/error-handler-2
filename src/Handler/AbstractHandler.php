@@ -4,16 +4,15 @@ namespace RcmErrorHandler2\Handler;
 
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\ErrorResponseConfig;
-use RcmErrorHandler2\Middleware\ErrorDisplayFinal;
-use RcmErrorHandler2\Middleware\MiddlewarePipe;
-use RcmErrorHandler2\Observer\Observer;
+use RcmErrorHandler2\ErrorDisplay\ErrorDisplay;
+use RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinal;
+use RcmErrorHandler2\ErrorDisplay\MiddlewarePipe;
 use RcmErrorHandler2\Exception\ErrorException;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
-use RcmErrorHandler2\Middleware\ErrorDisplay;
+use RcmErrorHandler2\Observer\Observer;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\PhpErrorSettings;
-use RcmErrorHandler2\Service\PhpServer;
 use Zend\Diactoros\Response\EmitterInterface;
 
 /**
@@ -210,8 +209,6 @@ abstract class AbstractHandler implements Handler
     /**
      * display
      *
-     * @todo Probably missing some stuff here
-     *
      * @param ErrorResponse $response
      *
      * @return void
@@ -220,26 +217,6 @@ abstract class AbstractHandler implements Handler
     {
         $this->emitter->emit($response);
     }
-//
-//    /**
-//     * getDisplay
-//     *
-//     * @param ErrorResponse $response
-//     *
-//     * @return string
-//     */
-//    public function getDisplay(ErrorResponse $response)
-//    {
-//        $headers = $response->getHeaders();
-//
-//        // PhpServer::setResponseHeaders($headers);
-//
-//        $body = $response->getBody();
-//
-//        var_dump('getDisplay', $body->getContents());
-//
-//        return $body->getContents();
-//    }
 
     /**
      * registerServices

@@ -30,6 +30,31 @@ return [
         => \RcmErrorHandler2\Factory\ConfigRcmErrorHandler2ConfigFactory::class,
 
         /**
+         * Final Display Default - Over-ride this for different final display
+         */
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinal::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
+
+        /**
+         * ErrorDisplay Middleware
+         */
+        // ErrorDisplayFinalBasic
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalBasic::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
+        // ErrorDisplayFinalDump
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalDump::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
+        // ErrorDisplayFormatted
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFormattedFactory::class,
+        // ErrorDisplayJson
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayJsonFactory::class,
+        // ErrorDisplayXDebug
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayXDebugFactory::class,
+
+        /**
          * Formatter Services
          */
         // Formatter Default
@@ -84,27 +109,8 @@ return [
         => \RcmErrorHandler2\Factory\ObserverLoggerObserverFactory::class,
 
         /**
-         * Final Display Default - Over-ride this for different final display
-         */
-        \RcmErrorHandler2\Middleware\ErrorDisplayFinal::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
-
-        /**
          * Middleware
          */
-        // ErrorDisplay
-        // ErrorDisplayFinalBasic
-        \RcmErrorHandler2\Middleware\ErrorDisplayFinalBasic::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
-        // ErrorDisplayFinalDump
-        \RcmErrorHandler2\Middleware\ErrorDisplayFinalDump::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
-        // ErrorDisplayFormatted
-        \RcmErrorHandler2\Middleware\ErrorDisplayFormatted::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFormattedFactory::class,
-        // ErrorDisplayJson
-        \RcmErrorHandler2\Middleware\ErrorDisplayJson::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayJsonFactory::class,
         // FinalHandler
         \RcmErrorHandler2\Middleware\FinalHandler::class
         => \RcmErrorHandler2\Factory\MiddlewareFinalHandlerFactory::class,
@@ -120,6 +126,9 @@ return [
         // TestExceptionController
         \RcmErrorHandler2\Middleware\TestExceptionController::class
         => \RcmErrorHandler2\Factory\MiddlewareTestExceptionControllerFactory::class,
+        // TestWarningController
+        \RcmErrorHandler2\Middleware\TestWarningController::class
+        => \RcmErrorHandler2\Factory\MiddlewareTestWarningControllerFactory::class,
 
         /**
          * Services

@@ -62,13 +62,18 @@ class FileErrorLogger extends AbstractErrorLogger
             '/var/log'
         );
 
+        $fileName = $this->getOption(
+            'fileName',
+            'rcm-error-handler-2-log'
+        );
+
         if (!file_exists($fileLogPath)) {
             mkdir($fileLogPath, 0766, true);
         }
 
         $fileLogPath = realpath($fileLogPath);
 
-        $fileName = 'rcm-error-handler-log-' . $now->format('Y-m-d') . '.json';
+        $fileName = $fileName . '-' . $now->format('Y-m-d') . '.json';
 
         $fileLogPathFile = $fileLogPath . '/' . $fileName;
 

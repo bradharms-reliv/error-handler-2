@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler2\Middleware;
+namespace RcmErrorHandler2\ErrorDisplay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -8,15 +8,22 @@ use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 
 /**
- * Class ErrorDisplayBasic
+ * Class ErrorDisplay
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
+interface ErrorDisplay
 {
+    /**
+     * getName
+     *
+     * @return string
+     */
+    public function getName();
+
     /**
      * __invoke
      *
@@ -24,13 +31,7 @@ class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
      * @param ErrorResponse $response
      * @param callable|null $next
      *
-     * @return callable|ErrorResponse
+     * @return callable
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
-    {
-        $body = $response->getBody();
-        $body->write('An error occurred');
-
-        return $response->withBody($body);
-    }
+    public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null);
 }

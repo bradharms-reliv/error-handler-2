@@ -1,6 +1,6 @@
 <?php
 
-namespace RcmErrorHandler2\Middleware;
+namespace RcmErrorHandler2\ErrorDisplay;
 
 /**
  * Class ErrorDisplayAbstract

@@ -15,6 +15,13 @@ use Psr\Http\Message\ResponseInterface;
 interface ErrorResponse extends ResponseInterface
 {
     /**
+     * getNormalErrorHandlerContinues
+     *
+     * @return bool
+     */
+    public function getNormalErrorHandlerContinues();
+
+    /**
      * withNormalErrorHandling
      *
      * @param $normalErrorHandlerContinues

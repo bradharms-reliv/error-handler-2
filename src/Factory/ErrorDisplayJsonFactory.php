@@ -4,7 +4,7 @@ namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\ErrorResponseConfig;
-use RcmErrorHandler2\Middleware\ErrorDisplayJson;
+use RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson;
 
 /**
  * Class ErrorDisplayJsonFactory

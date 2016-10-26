@@ -9,6 +9,7 @@ use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Handler\BasicThrowable;
 use RcmErrorHandler2\Handler\Throwable;
 use RcmErrorHandler2\Http\BasicErrorResponse;
+use RcmErrorHandler2\Http\BasicErrorThrowingResponse;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorHandlerManager;
@@ -88,6 +89,11 @@ class FinalHandler
         );
 
         $response = $this->handler->notify($errorRequest, $errorResponse);
+
+        if (!$response->stopNormalErrorHandling()) {
+            // This is a kinda hack to get around the try catch. When getBody is called, it throws
+            $response = new BasicErrorThrowingResponse($response, $errorException);
+        }
 
         return $response;
     }
