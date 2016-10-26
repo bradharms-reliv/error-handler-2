@@ -4,8 +4,8 @@ namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\ObserverConfig;
-use RcmErrorHandler2\Formatter\SummaryFormatter;
-use RcmErrorHandler2\Formatter\TraceFormatter;
+use RcmErrorHandler2\Formatter\BasicSummaryFormatter;
+use RcmErrorHandler2\Formatter\BasicTraceFormatter;
 use RcmErrorHandler2\Observer\LoggerObserver;
 
 /**
@@ -31,13 +31,13 @@ class ObserverLoggerObserverFactory
         $observerConfig = $container->get(ObserverConfig::class);
         $loggerObserverConfig = $observerConfig->getConfig(LoggerObserver::class);
 
-        $defaultSummaryFormatter = $container->get(SummaryFormatter::class);
-        $defaultTraceFormatter = $container->get(TraceFormatter::class);
+        $summaryFormatter = $container->get(BasicSummaryFormatter::class);
+        $traceFormatter = $container->get(BasicTraceFormatter::class);
 
         return new LoggerObserver(
             $loggerObserverConfig,
-            $defaultSummaryFormatter,
-            $defaultTraceFormatter,
+            $summaryFormatter,
+            $traceFormatter,
             $container
         );
     }

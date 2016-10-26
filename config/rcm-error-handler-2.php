@@ -123,6 +123,6 @@ return [
     /**
      * VarDumpErrorLogger Options
      */
-    RcmErrorHandler\Log\VarDumpErrorLogger::class => [
+    RcmErrorHandler2\Log\VarDumpErrorLogger::class => [
     ],
 ];

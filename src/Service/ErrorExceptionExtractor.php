@@ -29,12 +29,12 @@ class ErrorExceptionExtractor
         $result['file'] = $errorException->getFile();
         $result['line'] = $errorException->getLine();
         $result['previous'] = $errorException->getPrevious();
-        $result['trace'] = $errorException->getTrace();
+        $result['actualExceptionClass'] = $errorException->getActualExceptionClass();
+        $result['handler'] = $errorException->getHandler();
         if ($result['previous'] instanceof \stdClass) {
             $result['previous'] = get_class($result['previous']);
         }
-        $result['actualExceptionClass'] = $errorException->getActualExceptionClass();
-        $result['handler'] = $errorException->getHandler();
+        $result['trace'] = $errorException->getTrace();
 
         return $result;
     }

@@ -4,8 +4,12 @@
  */
 return [
     'invokables' => [
+        // BodyParamsMiddleware
         \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class
         => \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
+        // ClientErrorLoggerJsController
+        \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
+        => \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
     ],
     'factories' => [
         /**
@@ -67,6 +71,12 @@ return [
         \RcmErrorHandler2\Formatter\TraceFormatter::class
         => \RcmErrorHandler2\Factory\FormatterHtmlTraceFormatterFactory::class,
 
+        // BasicSummaryFormatter
+        \RcmErrorHandler2\Formatter\BasicSummaryFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterBasicSummaryFormatterFactory::class,
+        // BasicTraceFormatter
+        \RcmErrorHandler2\Formatter\BasicTraceFormatter::class
+        => \RcmErrorHandler2\Factory\FormatterBasicTraceFormatterFactory::class,
         // HtmlFormatter
         \RcmErrorHandler2\Formatter\HtmlFormatter::class
         => \RcmErrorHandler2\Factory\FormatterHtmlFormatterFactory::class,

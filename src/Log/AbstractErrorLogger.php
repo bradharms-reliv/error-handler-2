@@ -220,8 +220,8 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
      */
     public function prepareException($exception, $lineBreak = "\n")
     {
-        if (!$exception instanceof \Throwable) {
-            return [];
+        if (!$exception instanceof \Throwable && !$exception instanceof \Exception) {
+            return json_encode($exception);
         }
 
         $return = [];
