@@ -134,6 +134,21 @@ class PhpErrorHandlerManager
     }
 
     /**
+     * throwWithDefaultExceptionHandler
+     *
+     * @param \Throwable $exception
+     *
+     * @return void
+     * @throws \Throwable
+     */
+    public static function throwWithDefaultExceptionHandler(\Throwable $exception)
+    {
+        // only works in php 7
+        set_exception_handler(null);
+        throw $exception;
+    }
+
+    /**
      * getCurrentErrorHandler
      *
      * @return mixed

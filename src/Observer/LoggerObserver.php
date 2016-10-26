@@ -117,9 +117,11 @@ class LoggerObserver implements Observer
             'line' => $errorException->getLine(),
             'message' => $errorException->getMessage(),
             'exception' => $errorException->getActualExceptionClass(),
+            'handler' => $errorException->getHandler(),
         ];
 
         if ($this->options->get('includeStacktrace', false) == true) {
+            $extras['traceArray'] = $errorException->getTrace();
             $extras['trace'] = $this->traceFormatter->format($errorException, $traceFormatterOptions);
         }
 

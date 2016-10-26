@@ -75,7 +75,7 @@ return [
          * Final Display Default
          */
         \RcmErrorHandler2\Middleware\ErrorDisplayFinal::class
-        => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
 
         /**
          * Middleware

@@ -42,8 +42,17 @@ class FileErrorLogger extends AbstractErrorLogger
         if (isset($extra['trace'])) {
             $array['trace:'] = $extra['trace'];
         }
+
+        if (isset($extra['traceArray'])) {
+            $array['traceArray:'] = $extra['traceArray'];
+        }
+
         if (isset($extra['exception'])) {
             $array['exception:'] = $this->prepareException($extra['exception']);
+        }
+
+        if (isset($extra['handler'])) {
+            $array['handler:'] = $extra['handler'];
         }
 
         $contents = json_encode($array, 0);

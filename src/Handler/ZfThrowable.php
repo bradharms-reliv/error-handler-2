@@ -2,6 +2,7 @@
 
 namespace RcmErrorHandler2\Handler;
 
+use RcmErrorHandler2\Exception\ErrorException;
 use Zend\EventManager\Event;
 
 /**
@@ -15,11 +16,20 @@ use Zend\EventManager\Event;
 interface ZfThrowable extends Handler
 {
     /**
-     * handleEvent
+     * handle
      *
      * @param Event $event
      *
      * @return mixed
      */
-    public function handleEvent(Event $event);
+    public function handle(Event $event);
+
+    /**
+     * getErrorException
+     *
+     * @param \Exception|\Throwable $exception
+     *
+     * @return ErrorException
+     */
+    public function getErrorException($exception);
 }

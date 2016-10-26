@@ -45,7 +45,7 @@ abstract class AbstractThrowable extends AbstractHandler implements Throwable
         $errorResponse = $this->notify($request, $response);
 
         $this->display($errorResponse);
-        // @todo This logic might not be what we want
+
         if ($errorResponse->stopNormalErrorHandling()) {
             die();
         }
