@@ -4,8 +4,12 @@
  */
 return [
     'invokables' => [
+        // BodyParamsMiddleware
         \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class
         => \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
+        // ClientErrorLoggerJsController
+        \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
+        => \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
     ],
     'factories' => [
         /**
