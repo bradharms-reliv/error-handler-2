@@ -26,6 +26,13 @@ return [
     ],
 
     /**
+     * ErrorDisplay general options
+     */
+    'errorDisplay' => [
+        'finalMessage' => 'An error occurred.',
+    ],
+
+    /**
      * General Handler Options
      */
     'errorResponse' => [

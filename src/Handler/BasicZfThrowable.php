@@ -51,15 +51,15 @@ class BasicZfThrowable extends AbstractHandler implements ZfThrowable, Handler
 
         $this->display($errorResponse);
 
-        var_dump($errorResponse->stopNormalErrorHandling());
-
         // @todo This logic might not be what we want
         if ($errorResponse->stopNormalErrorHandling()) {
-            //die(); // or return
+            $event->stopPropagation(true);
+            return;
         }
 
+        // We can not let this exception fly as it will be picked up by the exception handler
         $event->stopPropagation(true);
-        // We might not be able to do this
+        // Not be able to do this
         //PhpErrorHandlerManager::throwWithDefaultExceptionHandler($errorException->getActualException());
     }
 

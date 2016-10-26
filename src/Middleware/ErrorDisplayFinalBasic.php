@@ -30,7 +30,7 @@ class ErrorDisplayFinalBasic extends ErrorDisplayAbstract implements ErrorDispla
     {
         $response = $response->withNormalErrorHandling(true);
         $body = $response->getBody();
-        $body->write('An unhandled error occurred');
+        $body->write('An error occurred:: ');
 
         return $response->withBody($body);
     }

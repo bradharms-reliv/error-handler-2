@@ -37,6 +37,7 @@ class ErrorDisplayFinalDump extends ErrorDisplayAbstract implements ErrorDisplay
         $result = ErrorExceptionExtractor::extractArray($errorException);
 
         ob_start();
+        echo "An error occurred:: \n\n";
         var_dump($result);
         $content = ob_get_contents();
         ob_end_clean();

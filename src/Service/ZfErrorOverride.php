@@ -69,7 +69,7 @@ class ZfErrorOverride
             \Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR,
             [
                 $handler,
-                'handleEvent'
+                'handle'
             ]
         );
 
@@ -78,9 +78,8 @@ class ZfErrorOverride
             \Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR,
             [
                 $handler,
-                'handleEvent'
+                'handle'
             ]
         );
-
     }
 }
