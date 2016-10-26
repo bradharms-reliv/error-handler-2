@@ -98,23 +98,11 @@ return [
          * Define which loggers to use for JS logging
          */
         'jsLoggers' => [
-            /**
-             * Use JiraLogger service
-             */
-            // 'Reliv\RcmJira\Log\JiraLogger',
-
-            /**
-             * Use AxosoftLogger service
-             */
-            // 'Reliv\RcmAxosoft\Log\AxosoftLogger',
-
-            /**
-             * General Loggers
-             */
-            /* *
-             'RcmErrorHandler\Log\PhpErrorLogger'
-             'RcmErrorHandler\Log\VarDumpErrorLogger'
-            /* */
+            //RcmErrorHandler2\Log\FileErrorLogger::class,
+            //RcmErrorHandler2\Log\PhpErrorLogger::class,
+            //RcmErrorHandler\Log\VarDumpErrorLogger::class,
+            //Reliv\RcmJira\Log\JiraLoggerPsr::class,
+            //Reliv\RcmAxosoft\Log\AxosoftLoggerPsr::class',
         ],
     ],
 

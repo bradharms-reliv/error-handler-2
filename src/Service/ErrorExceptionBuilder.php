@@ -187,16 +187,17 @@ class ErrorExceptionBuilder
 
         if (is_int($err)) {
             $code = $err;
+            $message = $message . '(' . $err . ')';
         }
 
         if (is_array($err)) {
-            $message = $message . json_encode($err);
+            $message = $message . '(' . json_encode($err) . ')';
         }
 
         if (is_object($err)) {
             $export = var_export($err, true);
             $export = substr($export, 0, 255);
-            $message = $message . $export;
+            $message = $message . "\n" .$export;
         }
 
         return new ErrorException(
