@@ -19,6 +19,11 @@ return [
     'overrideZfExceptions' => false,
 
     /**
+     * Allow test controllers and services
+     */
+    'testEnabled' => false,
+
+    /**
      * Default formatter general options
      */
     'defaultFormatter' => [

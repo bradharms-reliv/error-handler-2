@@ -149,8 +149,5 @@ return [
         // PhpErrorOverride
         \RcmErrorHandler2\Service\PhpErrorOverride::class
         => \RcmErrorHandler2\Factory\ServicePhpErrorOverrideFactory::class,
-        // Environment: Over-ride this for different server environment
-        \RcmErrorHandler2\Service\Environment::class
-        => \RcmErrorHandler2\Factory\ServiceRelivEnvironmentFactory::class,
     ],
 ];
