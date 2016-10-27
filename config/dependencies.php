@@ -45,6 +45,9 @@ return [
         // ErrorDisplayFinalBasic
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalBasic::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
+        // ErrorDisplayFinalDoctrineDump
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalDoctrineDump::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalDoctrineDumpFactory::class,
         // ErrorDisplayFinalDump
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalDump::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
