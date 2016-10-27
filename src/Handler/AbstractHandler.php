@@ -187,7 +187,7 @@ abstract class AbstractHandler implements Handler
         try {
             $pipe = new MiddlewarePipe();
 
-            foreach ($this->errorDisplays as $errorDisplay) {
+            foreach ($this->errorDisplays as $alias => $errorDisplay) {
                 $pipe->pipe('/', $errorDisplay);
             }
 

@@ -47,9 +47,9 @@ return [
      * - Or call next if it does not display the error
      */
     'errorDisplayMiddleware' => [
-        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class,
-        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class,
-        // NOT COMPLETE: \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
+        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class,
+        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class,
+        // NOT COMPLETE: \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
     ],
 
     /**
