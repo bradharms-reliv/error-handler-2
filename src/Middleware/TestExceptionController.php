@@ -44,7 +44,7 @@ class TestExceptionController
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        if($this->config->get('testEnabled', false)) {
+        if (!$this->config->get('testEnabled', false)) {
             return $response->withHeader('status', '404');
         }
 
