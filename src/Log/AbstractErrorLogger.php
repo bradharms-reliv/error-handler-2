@@ -165,7 +165,7 @@ abstract class AbstractErrorLogger extends AbstractLogger implements LoggerInter
             $message = preg_replace($pattern, $replacement, $message);
         }
 
-        $summary = $priority . ': ' . $message;
+        $summary = strtoupper($priority) . ': ' . $message;
 
         $summary = substr($summary, 0, 255);
 

@@ -14,7 +14,7 @@ return [
         'allowed_methods' => ['POST'],
     ],
     [
-        'name' => 'api.rcm-error-handler-2.client-error',
+        'name' => 'api.rcm-error-handler-2.client-error.js',
         'path' => '/rcm-error-handler-2/client-error.js',
         'middleware' => \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class,
         'options' => [],
