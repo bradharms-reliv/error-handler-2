@@ -35,15 +35,15 @@ class TestErrorController
     /**
      * __invoke
      *
-     * @param RequestInterface $request
-     * @param ResponseInterface      $response
-     * @param callable|null          $next
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     * @param callable|null     $next
      *
      * @return mixed
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        if($this->config->get('testEnabled', false)) {
+        if (!$this->config->get('testEnabled', false)) {
             return $response->withHeader('status', '404');
         }
 

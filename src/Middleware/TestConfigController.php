@@ -43,7 +43,7 @@ class TestConfigController
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
-        if($this->config->get('testEnabled', false)) {
+        if (!$this->config->get('testEnabled', false)) {
             return $response->withHeader('status', '404');
         }
         $responseData = json_encode($this->config->toArray(), JSON_PRETTY_PRINT);
