@@ -2,9 +2,7 @@
 
 namespace RcmErrorHandler2\Middleware;
 
-use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\RcmErrorHandler2Config;
-use RcmErrorHandler2\Service\Environment;
 use Zend\Stratigility\Http\Request;
 use Zend\Stratigility\Http\Response;
 
@@ -19,11 +17,6 @@ use Zend\Stratigility\Http\Response;
 class TestConfigController
 {
     /**
-     * @var Environment
-     */
-    protected $environment;
-
-    /**
      * @var RcmErrorHandler2Config
      */
     protected $config;
@@ -31,14 +24,11 @@ class TestConfigController
     /**
      * TestConfigController constructor.
      *
-     * @param Environment            $environment
      * @param RcmErrorHandler2Config $config
      */
     public function __construct(
-        Environment $environment,
         RcmErrorHandler2Config $config
     ) {
-        $this->environment = $environment;
         $this->config = $config;
     }
 
@@ -53,8 +43,8 @@ class TestConfigController
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
-        if($this->environment->isProduction()) {
-            return $response->withHeader('status', '400');
+        if($this->config->get('testEnabled', false)) {
+            return $response->withHeader('status', '404');
         }
         $responseData = json_encode($this->config->toArray(), JSON_PRETTY_PRINT);
 

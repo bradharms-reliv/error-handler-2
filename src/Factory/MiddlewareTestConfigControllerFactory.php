@@ -5,7 +5,6 @@ namespace RcmErrorHandler2\Factory;
 use Interop\Container\ContainerInterface;
 use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Middleware\TestConfigController;
-use RcmErrorHandler2\Service\Environment;
 
 /**
  * Class MiddlewareTestConfigControllerFactory
@@ -29,10 +28,7 @@ class MiddlewareTestConfigControllerFactory
         /** @var RcmErrorHandler2Config $rcmErrorHandler2Config */
         $rcmErrorHandler2Config = $container->get(RcmErrorHandler2Config::class);
 
-        $environment = $container->get(Environment::class);
-
         return new TestConfigController(
-            $environment,
             $rcmErrorHandler2Config
         );
     }

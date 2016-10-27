@@ -3,6 +3,7 @@
 namespace RcmErrorHandler2\Factory;
 
 use Interop\Container\ContainerInterface;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 use RcmErrorHandler2\Middleware\TestErrorController;
 
 /**
@@ -24,6 +25,11 @@ class MiddlewareTestErrorControllerFactory
      */
     public function __invoke($container)
     {
-        return new TestErrorController();
+        /** @var RcmErrorHandler2Config $rcmErrorHandler2Config */
+        $rcmErrorHandler2Config = $container->get(RcmErrorHandler2Config::class);
+
+        return new TestErrorController(
+            $rcmErrorHandler2Config
+        );
     }
 }

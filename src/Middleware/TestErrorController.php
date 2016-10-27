@@ -4,6 +4,7 @@ namespace RcmErrorHandler2\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RcmErrorHandler2\Config\RcmErrorHandler2Config;
 
 /**
  * Class TestErrorController
@@ -16,6 +17,22 @@ use Psr\Http\Message\ResponseInterface;
 class TestErrorController
 {
     /**
+     * @var RcmErrorHandler2Config
+     */
+    protected $config;
+
+    /**
+     * TestConfigController constructor.
+     *
+     * @param RcmErrorHandler2Config $config
+     */
+    public function __construct(
+        RcmErrorHandler2Config $config
+    ) {
+        $this->config = $config;
+    }
+
+    /**
      * __invoke
      *
      * @param RequestInterface $request
@@ -26,6 +43,10 @@ class TestErrorController
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null)
     {
+        if($this->config->get('testEnabled', false)) {
+            return $response->withHeader('status', '404');
+        }
+
         trigger_error('This is a test error from: ' . get_class($this), E_USER_ERROR);
 
         return $next($request, $response);
