@@ -39,6 +39,7 @@ class ErrorServerRequestFactory extends ServerRequestFactory
     ) {
         $server = static::normalizeServer($server ?: $_SERVER);
         $files = static::normalizeFiles($files ?: $_FILES);
+        // @todo These are not in the formatted as expected
         $headers = static::marshalHeaders($server);
 
         return new BasicErrorRequest(

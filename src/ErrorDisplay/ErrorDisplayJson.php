@@ -9,7 +9,6 @@ use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionExtractor;
-use Zend\Diactoros\Stream;
 
 /**
  * Class ErrorDisplayJson
@@ -50,13 +49,7 @@ class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
     {
         $errorException = $request->getError();
 
-        if (!$request->hasHeader('accept')) {
-            return $next($request, $response);
-        }
-
-        $headerValues = $request->getHeader('accept');
-
-        if (!in_array('application/json', $headerValues)) {
+        if (!$this->hasJsonHeader($request)) {
             return $next($request, $response);
         }
 
@@ -77,5 +70,29 @@ class ErrorDisplayJson extends ErrorDisplayAbstract implements ErrorDisplay
         );
 
         return $response;
+    }
+
+    /**
+     * hasJsonHeader
+     *
+     * @param RequestInterface $request
+     *
+     * @return bool
+     */
+    protected function hasJsonHeader(RequestInterface $request)
+    {
+        if (!$request->hasHeader('accept')) {
+            return false;
+        }
+
+        $headerValues = $request->getHeader('accept');
+
+        foreach ($headerValues as $headerValue) {
+            if (strpos($headerValue, 'application/json') !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
