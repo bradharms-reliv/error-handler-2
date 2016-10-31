@@ -20,6 +20,9 @@ return [
         // ErrorDisplayConfig
         \RcmErrorHandler2\Config\ErrorDisplayConfig::class
         => \RcmErrorHandler2\Factory\ConfigErrorDisplayConfigFactory::class,
+        // ErrorDisplayFileConfig
+        \RcmErrorHandler2\Config\ErrorDisplayFileConfig::class
+        => \RcmErrorHandler2\Factory\ConfigErrorDisplayFileFactory::class,
         // ErrorDisplayMiddlewareConfig
         \RcmErrorHandler2\Config\ErrorDisplayMiddlewareConfig::class
         => \RcmErrorHandler2\Factory\ConfigErrorDisplayMiddlewareConfigFactory::class,
@@ -42,6 +45,12 @@ return [
         /**
          * ErrorDisplay Middleware
          */
+        // ErrorDisplayBasic
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayBasic::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayBasicFactory::class,
+        // ErrorDisplayFile
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFile::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFileFactory::class,
         // ErrorDisplayFinalBasic
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalBasic::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFinalBasicFactory::class,
