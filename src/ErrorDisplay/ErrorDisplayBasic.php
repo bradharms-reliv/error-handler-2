@@ -28,6 +28,8 @@ class ErrorDisplayBasic extends ErrorDisplayAbstract implements ErrorDisplay
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
+        $response = $response->withNormalErrorHandling(false);
+
         $body = $response->getBody();
         $body->write('An error occurred');
 

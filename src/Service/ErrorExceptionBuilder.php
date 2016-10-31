@@ -15,6 +15,13 @@ use RcmErrorHandler2\Exception\ErrorException;
 class ErrorExceptionBuilder
 {
     /**
+     * This works best by using http status code
+     *
+     * int
+     */
+    protected static $defaultCode = 500;
+
+    /**
      * @var array $errorMap
      */
     protected static $errorMap
@@ -36,6 +43,20 @@ class ErrorExceptionBuilder
             E_USER_NOTICE => 'UserNotice',
             E_ALL => 'Unknown'
         ];
+
+    /**
+     * getDefaultCode
+     *
+     * @return int
+     */
+    public static function buildDefaultCode($code)
+    {
+        if (empty($code)) {
+            $code = self::$defaultCode;
+        }
+
+        return $code;
+    }
 
     /**
      * buildFromError
@@ -63,7 +84,7 @@ class ErrorExceptionBuilder
 
         return new $exceptionClass(
             $errstr,
-            0,
+            self::$defaultCode,
             $errno,
             $errfile,
             $errline,
@@ -110,7 +131,7 @@ class ErrorExceptionBuilder
             $exceptionClass = self::getExceptionClassName($prev['type']);
             $prev = new $exceptionClass(
                 $prev['message'],
-                0,
+                self::$defaultCode,
                 $prev['type'],
                 $prev['file'],
                 $prev['line'],
@@ -136,11 +157,13 @@ class ErrorExceptionBuilder
     ) {
         $errorException = $exception;
 
+        $code = self::buildDefaultCode($exception->getCode());
+
         if (!$errorException instanceof ErrorException) {
             // Wrap it in an error exception
             $errorException = new ErrorException(
                 $exception->getMessage(),
-                $exception->getCode(),
+                $code,
                 E_USER_ERROR,
                 $exception->getFile(),
                 $exception->getLine(),
@@ -175,7 +198,7 @@ class ErrorExceptionBuilder
         }
 
         $message = 'GENERIC ERROR: ';
-        $code = 0;
+        $code = self::$defaultCode;
 
         if (empty($err)) {
             $message = 'EMPTY ERROR: (' . json_encode($err) . ')';
@@ -197,7 +220,7 @@ class ErrorExceptionBuilder
         if (is_object($err)) {
             $export = var_export($err, true);
             $export = substr($export, 0, 255);
-            $message = $message . "\n" .$export;
+            $message = $message . "\n" . $export;
         }
 
         return new ErrorException(

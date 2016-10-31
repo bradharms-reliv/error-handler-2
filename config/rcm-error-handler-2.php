@@ -54,6 +54,7 @@ return [
     'errorDisplayMiddleware' => [
         // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class,
         // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class,
+        // \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFile::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFile::class,
         // NOT COMPLETE: \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class => \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
     ],
 
@@ -109,6 +110,10 @@ return [
             //Reliv\RcmJira\Log\JiraLoggerPsr::class,
             //Reliv\RcmAxosoft\Log\AxosoftLoggerPsr::class',
         ],
+    ],
+
+    \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFile::class => [
+        'httpStatusFileDirectory' => __DIR__ . '/../public/http-status'
     ],
 
     /**
