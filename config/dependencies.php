@@ -60,6 +60,9 @@ return [
         // ErrorDisplayFinalDump
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalDump::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFinalDumpFactory::class,
+        // ErrorDisplayFinalFile
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFinalFile::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayFinalFileFactory::class,
         // ErrorDisplayFormatted
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayFormatted::class
         => \RcmErrorHandler2\Factory\ErrorDisplayFormattedFactory::class,
