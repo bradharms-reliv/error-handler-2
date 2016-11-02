@@ -7,6 +7,7 @@ use RcmErrorHandler2\Http\BasicErrorResponse;
 use RcmErrorHandler2\Service\ErrorExceptionBuilder;
 use RcmErrorHandler2\Service\ErrorServerRequestFactory;
 use RcmErrorHandler2\Service\PhpErrorHandlerManager;
+use RcmErrorHandler2\Service\PhpErrorSettings;
 use Zend\EventManager\Event;
 use Zend\Mvc\MvcEvent;
 
@@ -57,10 +58,10 @@ class BasicZfThrowable extends AbstractHandler implements ZfThrowable, Handler
             return;
         }
 
-        // We can not let this exception fly as it will be picked up by the exception handler
-        $event->stopPropagation(true);
-        // Not be able to do this
-        //PhpErrorHandlerManager::throwWithDefaultExceptionHandler($errorException->getActualException());
+        // Steeling the error handling form ZF
+        if (!PhpErrorSettings::canDisplayErrors()) {
+            die;
+        }
     }
 
     /**
