@@ -71,7 +71,7 @@ abstract class ErrorDisplayJsonAbstract extends ErrorDisplayAbstract
         return new BasicErrorResponse(
             $body,
             $this->errorResponseConfig->get('status'),
-            ['content-type', ['application/json']],
+            ['content-type' => ['application/json']],
             $normalErrorHandlerContinues
         );
     }
