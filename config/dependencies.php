@@ -69,6 +69,9 @@ return [
         // ErrorDisplayJson
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJson::class
         => \RcmErrorHandler2\Factory\ErrorDisplayJsonFactory::class,
+        // ErrorDisplayJsonBasic
+        \RcmErrorHandler2\ErrorDisplay\ErrorDisplayJsonBasic::class
+        => \RcmErrorHandler2\Factory\ErrorDisplayJsonBasicFactory::class,
         // ErrorDisplayXDebug
         \RcmErrorHandler2\ErrorDisplay\ErrorDisplayXDebug::class
         => \RcmErrorHandler2\Factory\ErrorDisplayXDebugFactory::class,

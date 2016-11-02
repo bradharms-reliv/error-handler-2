@@ -16,7 +16,7 @@ use RcmErrorHandler2\Service\ErrorExceptionExtractor;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class ErrorDisplayJson extends ErrorDisplayJsonAbstract implements ErrorDisplay
+class ErrorDisplayJsonBasic extends ErrorDisplayJsonAbstract implements ErrorDisplay
 {
     /**
      * __invoke
@@ -29,18 +29,13 @@ class ErrorDisplayJson extends ErrorDisplayJsonAbstract implements ErrorDisplay
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
-        $errorException = $request->getError();
-
         if (!$this->hasJsonHeader($request)) {
             return $next($request, $response);
         }
 
-        // @todo Could move this to a formatter
-        $localMessage = 'An unhandled exception has occurred in: ' . self::class . ' from: ';
-        $result = ErrorExceptionExtractor::extractArray($errorException);
-        $result['message'] = $localMessage . $result['message'];
+        $result = [];
+        $result['message'] = 'An error occurred';
         $content = json_encode($result, JSON_PRETTY_PRINT);
-
         $body = $response->getBody();
         $body->write($content);
 
