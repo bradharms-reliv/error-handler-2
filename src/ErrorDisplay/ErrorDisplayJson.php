@@ -29,11 +29,11 @@ class ErrorDisplayJson extends ErrorDisplayJsonAbstract implements ErrorDisplay
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, $next = null)
     {
-        $errorException = $request->getError();
-
         if (!$this->hasJsonHeader($request)) {
             return $next($request, $response);
         }
+
+        $errorException = $request->getError();
 
         // @todo Could move this to a formatter
         $localMessage = 'An unhandled exception has occurred in: ' . self::class . ' from: ';

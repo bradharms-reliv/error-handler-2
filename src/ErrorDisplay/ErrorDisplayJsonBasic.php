@@ -4,9 +4,10 @@ namespace RcmErrorHandler2\ErrorDisplay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RcmErrorHandler2\Config\ErrorDisplayConfig;
+use RcmErrorHandler2\Config\ErrorResponseConfig;
 use RcmErrorHandler2\Http\ErrorRequest;
 use RcmErrorHandler2\Http\ErrorResponse;
-use RcmErrorHandler2\Service\ErrorExceptionExtractor;
 
 /**
  * Class ErrorDisplayJson
@@ -18,6 +19,25 @@ use RcmErrorHandler2\Service\ErrorExceptionExtractor;
  */
 class ErrorDisplayJsonBasic extends ErrorDisplayJsonAbstract implements ErrorDisplay
 {
+    /**
+     * @var ErrorDisplayConfig
+     */
+    protected $errorDisplayConfig;
+
+    /**
+     * ErrorDisplayJsonBasic constructor.
+     *
+     * @param ErrorResponseConfig $errorResponseConfig
+     * @param ErrorDisplayConfig  $errorDisplayConfig
+     */
+    public function __construct(
+        ErrorResponseConfig $errorResponseConfig,
+        ErrorDisplayConfig $errorDisplayConfig
+    ) {
+        $this->errorDisplayConfig = $errorDisplayConfig;
+        parent::__construct($errorResponseConfig);
+    }
+
     /**
      * __invoke
      *
@@ -32,9 +52,8 @@ class ErrorDisplayJsonBasic extends ErrorDisplayJsonAbstract implements ErrorDis
         if (!$this->hasJsonHeader($request)) {
             return $next($request, $response);
         }
-
         $result = [];
-        $result['message'] = 'An error occurred';
+        $result['message'] = $this->errorDisplayConfig->get('finalMessage', '');
         $content = json_encode($result, JSON_PRETTY_PRINT);
         $body = $response->getBody();
         $body->write($content);
