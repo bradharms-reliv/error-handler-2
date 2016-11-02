@@ -4,6 +4,8 @@ namespace RcmErrorHandler2\ErrorDisplay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RcmErrorHandler2\Http\ErrorRequest;
+use RcmErrorHandler2\Http\ErrorResponse;
 
 /**
  * Class ErrorDisplayFile
@@ -15,12 +17,11 @@ use Psr\Http\Message\ResponseInterface;
  */
 class ErrorDisplayFinalFile extends ErrorDisplayFile implements ErrorDisplayFinal
 {
-
     /**
      * __invoke
      *
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
+     * @param ErrorRequest  $request
+     * @param ErrorResponse $response
      * @param null              $next
      *
      * @return \RcmErrorHandler2\Http\ErrorResponse
