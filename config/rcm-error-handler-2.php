@@ -92,7 +92,7 @@ return [
     'jsLogConfig' => [
         'options' => [
             'logJsErrors' => false,
-            'validRoutes' => [
+            'routeWhiteList' => [
                 /**
                  * Regex for the start of the path
                  */

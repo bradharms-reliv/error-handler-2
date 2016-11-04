@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit>
+<phpunit bootstrap="vendor/autoload.php">
     <php>
         <ini name="memory_limit" value="2G"/>
     </php>
@@ -15,7 +15,7 @@
         </whitelist>
     </filter>
     <testsuites>
-        <testsuite name="rcm">
+        <testsuite>
             <directory>test</directory>
         </testsuite>
     </testsuites>
