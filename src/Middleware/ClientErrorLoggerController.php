@@ -5,6 +5,7 @@ namespace RcmErrorHandler2\Middleware;
 use Interop\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use RcmErrorHandler2\Config\RcmErrorHandler2Config;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Stratigility\Http\Request;
 use Zend\Stratigility\Http\Response;
 
@@ -46,8 +47,8 @@ class ClientErrorLoggerController
      * "type": "ClientError"
      * }
      *
-     * @param Request       $request
-     * @param Response      $response
+     * @param Request $request
+     * @param Response $response
      * @param callable|null $next
      *
      * @return mixed
@@ -57,18 +58,29 @@ class ClientErrorLoggerController
         $data = $request->getParsedBody();
 
         $hasLogged = false;
-        if ($this->isValidRoute($data) && $this->canLogErrors()) {
+
+        $failReason = null;
+
+        if (!$this->canLogErrors()) {
+            $failReason = 'logging is off';
+        }
+
+        if (!$this->isValidUserAgent($request)) {
+            $failReason = 'invalid user agent';
+        }
+
+        if (!$this->isValidRoute($data)) {
+            $failReason = 'invalid route';
+        }
+
+        if (!$failReason) {
             $hasLogged = $this->doLog($this->prepareMessage($data), $data);
         }
 
-        $responseData = json_encode(["success" => $hasLogged]);
-
-        $body = $response->getBody();
-        $body->write($responseData);
-
-        $response = $response->withHeader('content-type', 'application/json');
-
-        return $response->withBody($body);
+        return new JsonResponse([
+            "success" => $hasLogged,
+            "message" => $failReason ? $failReason : 'successfully logged'
+        ]);
     }
 
     /**
@@ -100,7 +112,7 @@ class ClientErrorLoggerController
      * doLog
      *
      * @param string $message
-     * @param array  $extra
+     * @param array $extra
      *
      * @return bool
      */
@@ -124,9 +136,9 @@ class ClientErrorLoggerController
     /**
      * getDataValue
      *
-     * @param array  $data
+     * @param array $data
      * @param string $key
-     * @param null   $default
+     * @param null $default
      *
      * @return null
      */
@@ -177,14 +189,14 @@ class ClientErrorLoggerController
 
         $loggerConfig = $this->getLoggerConfig();
 
-        $validRoutes = $loggerConfig['options']['validRoutes'];
+        $routeWhiteList = $loggerConfig['options']['routeWhiteList'];
 
-        if (empty($validRoutes)) {
+        if (empty($routeWhiteList)) {
             // default is all
             return true;
         }
 
-        foreach ($validRoutes as $routes) {
+        foreach ($routeWhiteList as $routes) {
             /* add routes to match in config using regex  */
             if (preg_match($routes, $routeUrl) != 0) {
                 return true;
@@ -192,6 +204,29 @@ class ClientErrorLoggerController
         }
 
         return false;
+    }
+
+    /**
+     * isValidUserAgent
+     *
+     * @param Request $request
+     * @return bool
+     */
+    protected function isValidUserAgent(Request $request)
+    {
+        $userAgent = $request->getHeaderLine('User-Agent');
+
+        $loggerConfig = $this->getLoggerConfig();
+
+        $userAgentBlackList = $loggerConfig['options']['userAgentBlackList'];
+
+        foreach ($userAgentBlackList as $routes) {
+            if (preg_match($routes, $userAgent) != 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
