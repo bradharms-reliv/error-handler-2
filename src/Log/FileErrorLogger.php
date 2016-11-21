@@ -68,7 +68,7 @@ class FileErrorLogger extends AbstractErrorLogger
         );
 
         if (!file_exists($fileLogPath)) {
-            mkdir($fileLogPath, 0766, true);
+            mkdir($fileLogPath, $this->getOption('directoryPermissions', 0766), true);
         }
 
         $fileLogPath = realpath($fileLogPath);
