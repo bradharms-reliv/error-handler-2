@@ -39,11 +39,12 @@ class FileErrorLogger extends AbstractErrorLogger
 
         $array['time:'] = $now->format('Y-m-d-H:m:s');
         $array['message:'] = $message;
-        if (isset($extra['trace'])) {
+
+        if (isset($extra['trace']) && $this->getOption('includeTrace', false)) {
             $array['trace:'] = $extra['trace'];
         }
 
-        if (isset($extra['traceArray'])) {
+        if (isset($extra['traceArray']) && $this->getOption('includeTraceArray', false)) {
             $array['traceArray:'] = $extra['traceArray'];
         }
 
@@ -55,7 +56,7 @@ class FileErrorLogger extends AbstractErrorLogger
             $array['handler:'] = $extra['handler'];
         }
 
-        $contents = json_encode($array, 0);
+        $contents = json_encode($array, $this->getOption('jsonOptions', 0));
 
         $fileLogPath = $this->getOption(
             'fileLogPath',
@@ -68,7 +69,7 @@ class FileErrorLogger extends AbstractErrorLogger
         );
 
         if (!file_exists($fileLogPath)) {
-            mkdir($fileLogPath, 0766, true);
+            mkdir($fileLogPath, $this->getOption('directoryPermissions', 0766), true);
         }
 
         $fileLogPath = realpath($fileLogPath);
