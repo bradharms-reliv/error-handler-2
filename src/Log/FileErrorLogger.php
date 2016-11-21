@@ -55,7 +55,7 @@ class FileErrorLogger extends AbstractErrorLogger
             $array['handler:'] = $extra['handler'];
         }
 
-        $contents = json_encode($array, $this->getOption('json-options', 0));
+        $contents = json_encode($array, $this->getOption('jsonOptions', 0));
 
         $fileLogPath = $this->getOption(
             'fileLogPath',
