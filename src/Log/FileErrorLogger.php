@@ -39,11 +39,12 @@ class FileErrorLogger extends AbstractErrorLogger
 
         $array['time:'] = $now->format('Y-m-d-H:m:s');
         $array['message:'] = $message;
-        if (isset($extra['trace'])) {
+
+        if (isset($extra['trace']) && $this->getOption('includeTrace', false)) {
             $array['trace:'] = $extra['trace'];
         }
 
-        if (isset($extra['traceArray'])) {
+        if (isset($extra['traceArray']) && $this->getOption('includeTraceArray', false)) {
             $array['traceArray:'] = $extra['traceArray'];
         }
 

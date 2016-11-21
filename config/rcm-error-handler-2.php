@@ -124,6 +124,8 @@ return [
         'fileName' => 'rcm-error-handler-2-log',
         'jsonOptions' => 0,
         'directoryPermissions' => 0766,
+        'includeTrace' => false,
+        'includeTraceArray' => true,
     ],
 
     /**
