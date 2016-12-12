@@ -68,11 +68,12 @@ abstract class AbstractHandler implements Handler
     /**
      * AbstractHandler constructor.
      *
-     * @param                     $container
+     * @param ContainerInterface  $container
      * @param array               $observerServiceNames
      * @param array               $errorDisplaysServiceNames
      * @param ErrorDisplayFinal   $errorDisplayFinal
      * @param ErrorResponseConfig $errorResponseConfig
+     * @param EmitterInterface    $emitter
      */
     public function __construct(
         $container,

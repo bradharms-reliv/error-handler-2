@@ -7,9 +7,6 @@ return [
         // BodyParamsMiddleware
         \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class
         => \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
-        // ClientErrorLoggerJsController
-        \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
-        => \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
     ],
     'factories' => [
         /**
@@ -29,6 +26,9 @@ return [
         // ErrorResponseConfig
         \RcmErrorHandler2\Config\ErrorResponseConfig::class
         => \RcmErrorHandler2\Factory\ConfigErrorResponseConfigFactory::class,
+        // JsLogConfig
+        \RcmErrorHandler2\Config\JsLogConfig::class
+        => \RcmErrorHandler2\Factory\ConfigJsLogConfigFactory::class,
         // ObserverConfig
         \RcmErrorHandler2\Config\ObserverConfig::class
         => \RcmErrorHandler2\Factory\ConfigObserverConfigFactory::class,
@@ -139,6 +139,9 @@ return [
         /**
          * Middleware
          */
+        // ClientErrorLoggerJsController
+        \RcmErrorHandler2\Middleware\ClientErrorLoggerJsController::class
+        => \RcmErrorHandler2\Factory\MiddlewareClientErrorJsControllerFactory::class,
         // ClientErrorLoggerController
         \RcmErrorHandler2\Middleware\ClientErrorLoggerController::class
         => \RcmErrorHandler2\Factory\MiddlewareClientErrorControllerFactory::class,
