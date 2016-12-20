@@ -66,8 +66,37 @@ class FinalHandler
      * @return ResponseInterface
      * @throws \Throwable
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, $err = null)
-    {
+    public function __invoke(
+        RequestInterface $request,
+        ResponseInterface $response,
+        $err = null
+    ) {
+        // If no error is sent, return the response
+        if (!$err) {
+            return $response;
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            return $response;
+        }
+
+        return $this->handleErrorResponse($err, $request, $response);
+    }
+
+    /**
+     * handleErrorResponse
+     *
+     * @param                   $err
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     *
+     * @return ResponseInterface|BasicErrorThrowingResponse|\RcmErrorHandler2\Http\ErrorResponse
+     */
+    protected function handleErrorResponse(
+        $err,
+        RequestInterface $request,
+        ResponseInterface $response
+    ) {
         $errorException = ErrorExceptionBuilder::buildFromUnknown($err, static::class);
 
         // Check if we handle these
