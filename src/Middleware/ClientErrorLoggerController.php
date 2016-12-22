@@ -35,6 +35,29 @@ class ClientErrorLoggerController
     }
 
     /**
+     * getParsedBody
+     *
+     * @param Request $request
+     *
+     * @return mixed|null
+     */
+    public function getParsedBody(Request $request)
+    {
+        if ($request->getMethod() !== 'POST') {
+            return null;
+        }
+
+        $rawBody = (string) $request->getBody();
+        $parsedBody = @json_decode($rawBody, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return null;
+        }
+
+        return $parsedBody;
+    }
+
+    /**
      * __invoke
      *
      * @request
@@ -47,15 +70,19 @@ class ClientErrorLoggerController
      * "type": "ClientError"
      * }
      *
-     * @param Request $request
-     * @param Response $response
+     * @param Request       $request
+     * @param Response      $response
      * @param callable|null $next
      *
      * @return mixed
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
-        $data = $request->getParsedBody();
+        $data = $this->getParsedBody($request);
+
+        if (empty($data)) {
+            return $response->withStatus(400);
+        }
 
         $hasLogged = false;
 
@@ -77,10 +104,12 @@ class ClientErrorLoggerController
             $hasLogged = $this->doLog($this->prepareMessage($data), $data);
         }
 
-        return new JsonResponse([
-            "success" => $hasLogged,
-            "message" => $failReason ? $failReason : 'successfully logged'
-        ]);
+        return new JsonResponse(
+            [
+                "success" => $hasLogged,
+                "message" => $failReason ? $failReason : 'successfully logged'
+            ]
+        );
     }
 
     /**
@@ -112,7 +141,7 @@ class ClientErrorLoggerController
      * doLog
      *
      * @param string $message
-     * @param array $extra
+     * @param array  $extra
      *
      * @return bool
      */
@@ -136,9 +165,9 @@ class ClientErrorLoggerController
     /**
      * getDataValue
      *
-     * @param array $data
+     * @param array  $data
      * @param string $key
-     * @param null $default
+     * @param null   $default
      *
      * @return null
      */
@@ -210,6 +239,7 @@ class ClientErrorLoggerController
      * isValidUserAgent
      *
      * @param Request $request
+     *
      * @return bool
      */
     protected function isValidUserAgent(Request $request)

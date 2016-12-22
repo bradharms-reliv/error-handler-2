@@ -6,10 +6,7 @@ return [
     [
         'name' => 'api.rcm-error-handler-2.client-error',
         'path' => '/api/rcm-error-handler-2/client-error',
-        'middleware' => [
-            \Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware::class,
-            \RcmErrorHandler2\Middleware\ClientErrorLoggerController::class,
-        ],
+        'middleware' => \RcmErrorHandler2\Middleware\ClientErrorLoggerController::class,
         'options' => [],
         'allowed_methods' => ['POST'],
     ],
