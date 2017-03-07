@@ -117,6 +117,7 @@ class LoggerObserver implements Observer
             'line' => $errorException->getLine(),
             'message' => $errorException->getMessage(),
             'exception' => $errorException->getActualExceptionClass(),
+            'exception-object' => $errorException->getActualException(),
             'handler' => $errorException->getHandler(),
         ];
 
